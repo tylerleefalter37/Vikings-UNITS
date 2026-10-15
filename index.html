@@ -1,0 +1,3832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>SAXON &amp; DANE: 128³ SHIELDWALL FORGE — 2,000 CODEX &amp; SQUAD EDITION</title>
+<style>
+  :root {
+    --bg-void: #030406;
+    --bg-deep: #07080c;
+    --bg-panel: #0d0f15;
+    --bg-card: #12151e;
+    --bg-elev: #1b202d;
+    --border: #2c3344;
+    --silver: #d8e0ec;
+    --silver-dim: #8e9bb0;
+    --white-glow: #ffffff;
+    --gold: #f5b041;
+    --amber: #ff7f50;
+    --crimson: #ef4444;
+    --emerald: #10b981;
+    --purple: #a855f7;
+    --cyan: #38bdf8;
+    --text-main: #f4f7fb;
+    --text-dim: #8b96a8;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    background: radial-gradient(circle at 50% 0%, #181c26 0%, var(--bg-void) 75%);
+    color: var(--text-main);
+    font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    min-height: 100vh;
+    user-select: none;
+  }
+
+  /* ========================================================================
+     ULTRA-COMPACT STICKY MICRO-HUD (< 18% VERTICAL PHONE SCREEN HEIGHT)
+     ======================================================================== */
+  .hud-header {
+    position: sticky; top: 0; z-index: 100;
+    width: 100%;
+    background: rgba(3, 4, 6, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--silver);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85);
+    padding: 4px 8px 5px;
+  }
+  .hud-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    max-width: 1440px;
+    margin: 0 auto 3px;
+  }
+  .brand-title {
+    display: flex; align-items: center; gap: 6px;
+    font-weight: 900; letter-spacing: 0.6px; font-size: 11px; color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .brand-badge {
+    background: #050608;
+    color: var(--gold); padding: 1px 5px; font-size: 9px; font-weight: 900;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .hud-actions {
+    display: flex; gap: 4px; align-items: center; flex-shrink: 0;
+  }
+
+  /* ROW 2: 5-COLUMN TELEMETRY BAR */
+  .hud-stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    max-width: 1440px;
+    margin: 0 auto 4px;
+  }
+  .stat-pill {
+    background: #0d0f15;
+    border: 1px solid #2e3646;
+    border-left: 2px solid var(--silver);
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .stat-pill span {
+    color: var(--text-dim);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .stat-pill b {
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .val-gold { color: var(--gold); }
+  .val-silver { color: var(--silver); }
+  .val-emerald { color: var(--emerald); }
+  .val-purple { color: var(--purple); }
+  .val-crimson { color: var(--crimson); }
+  .val-cyan { color: var(--cyan); }
+
+  /* ROW 3 & 4: LOCKED 2x3 NAVIGATION GRID ON ALL SCREEN SIZES */
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .nav-btn {
+    background: linear-gradient(180deg, #161a24 0%, #0b0d13 100%);
+    color: var(--text-dim);
+    border: 1px solid #2c3344;
+    border-radius: 5px;
+    padding: 5px 4px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.14s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .nav-btn:hover { border-color: var(--silver); color: #fff; }
+  .nav-btn.active {
+    background: linear-gradient(180deg, #2b3242 0%, #10131b 100%);
+    color: #fff;
+    border-color: #fff;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.22);
+  }
+  .nav-badge {
+    display: inline-block; background: #050608; color: var(--gold);
+    border: 1px solid #475569;
+    padding: 0px 4px; border-radius: 3px; font-size: 9px; margin-left: 2px;
+    font-family: "Courier New", monospace;
+  }
+
+  /* MAIN CONTAINER */
+  .main-wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 8px 8px 44px;
+  }
+  .tab-pane { display: none; width: 100%; }
+  .tab-pane.active { display: block; }
+
+  .section-bar {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 8px; margin-bottom: 8px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--silver);
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 100%;
+  }
+  .section-title {
+    font-size: 12px; font-weight: 900; color: var(--silver);
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .section-sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  /* QOL COMMAND BAR */
+  .qol-bar {
+    display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+    background: #090b10; border: 1px solid #283142; border-radius: 6px;
+    padding: 6px 8px; margin-bottom: 10px; width: 100%;
+  }
+
+  /* CARDS & GRIDS (STRICT MOBILE FIT 100VW) */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+  @media (max-width: 540px) {
+    .card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+  }
+  .unit-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .unit-thumb-wrap {
+    width: 100%; height: 122px;
+    background: radial-gradient(circle at 50% 55%, #222836 0%, #07080c 85%);
+    border: 1px solid #262d3d;
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative; overflow: hidden;
+  }
+  .unit-thumb {
+    width: 114px; height: 114px;
+    image-rendering: pixelated;
+    object-fit: contain;
+  }
+  .tier-tag {
+    position: absolute; top: 4px; left: 4px;
+    padding: 1px 5px; border-radius: 3px;
+    font-size: 9px; font-weight: 900;
+    background: rgba(4, 5, 8, 0.92); border: 1px solid currentColor;
+  }
+  .squad-tag {
+    position: absolute; top: 22px; left: 4px;
+    padding: 1px 5px; border-radius: 3px;
+    font-size: 8px; font-weight: 900;
+    background: rgba(16, 185, 129, 0.18); color: #34d399;
+    border: 1px solid #10b981;
+  }
+  .dex-tag {
+    position: absolute; bottom: 4px; left: 4px;
+    padding: 1px 5px; border-radius: 3px;
+    font-size: 9px; font-weight: 800; font-family: "Courier New", monospace;
+    background: rgba(4, 5, 8, 0.92); color: var(--gold); border: 1px solid #475569;
+  }
+  .finish-tag {
+    position: absolute; top: 4px; right: 4px;
+    padding: 1px 5px; border-radius: 3px;
+    font-size: 8px; font-weight: 700;
+    background: rgba(12, 15, 22, 0.92); color: var(--silver);
+    border: 1px solid #334155;
+    max-width: 64%;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .inspect-hint {
+    position: absolute; bottom: 4px; right: 4px;
+    font-size: 8px; color: #fff; background: rgba(4, 5, 8, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 3px; padding: 1px 4px;
+  }
+  .unit-title {
+    font-size: 11px; font-weight: 800; color: #fff; line-height: 1.2;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .unit-meta {
+    font-size: 9px; color: var(--text-dim);
+    display: flex; justify-content: space-between; gap: 4px;
+    white-space: nowrap; overflow: hidden;
+  }
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px;
+    background: #080a0f; border: 1px solid #1f2533; border-radius: 4px;
+    padding: 3px 2px; font-size: 9px; text-align: center;
+  }
+  .hp-bar-outer {
+    width: 100%; height: 5px; background: #050608; border-radius: 3px; overflow: hidden; border: 1px solid #222836;
+  }
+  .hp-bar-inner { height: 100%; background: var(--emerald); transition: width 0.2s; }
+
+  /* BUTTONS & INPUTS */
+  .btn {
+    background: var(--bg-elev); color: var(--text-main);
+    border: 1px solid #3c465c;
+    border-radius: 5px;
+    padding: 5px 8px; font-size: 10px; font-weight: 800;
+    letter-spacing: 0.2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.12s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+    min-width: 0;
+  }
+  .btn-xs { padding: 3px 6px; font-size: 9px; }
+  .btn:hover:not(:disabled) { border-color: #fff; color: #fff; }
+  .btn:active:not(:disabled) { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.42; cursor: not-allowed; }
+  .btn-silver { background: linear-gradient(180deg, #333b4d, #161a24); border-color: var(--silver); color: #fff; }
+  .btn-gold { background: linear-gradient(180deg, #d97706, #78350f); border-color: #f59e0b; color: #fff; }
+  .btn-emerald { background: linear-gradient(180deg, #059669, #064e3b); border-color: #34d399; color: #fff; }
+  .btn-crimson { background: linear-gradient(180deg, #dc2626, #7f1d1d); border-color: #f87171; color: #fff; }
+  .btn-purple { background: linear-gradient(180deg, #7e22ce, #4c1d95); border-color: #c084fc; color: #fff; }
+  .btn-god {
+    background: linear-gradient(135deg, #f59e0b, #b91c1c);
+    border-color: #fff; color: #fff;
+  }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 4px; width: 100%; }
+
+  select, input[type="text"] {
+    background: #07080c; color: var(--text-main);
+    border: 1px solid #333c4f; border-radius: 4px;
+    padding: 5px 6px; font-size: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+  label.chk-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #07080c; border: 1px solid var(--gold); border-radius: 4px;
+    color: var(--gold); padding: 4px 8px;
+    font-size: 10px; font-weight: 800; cursor: pointer;
+  }
+
+  /* ========================================================================
+     TAB 2: CUSTOM FORGE & 5-ZONE HEX PAINT STUDIO (MOBILE SAFE)
+     ======================================================================== */
+  .forge-studio-grid {
+    display: grid;
+    grid-template-columns: 350px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    width: 100%;
+  }
+  @media (max-width: 900px) {
+    .forge-studio-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .forge-preview-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--silver);
+    border-radius: 7px;
+    padding: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+  #forge-canvas {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    display: block;
+    margin: 0 auto;
+    background: radial-gradient(circle at 50% 55%, #252b3b 0%, #050609 85%);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: grab;
+    touch-action: none;
+  }
+  #forge-canvas:active { cursor: grabbing; }
+  .forge-controls-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+  .control-group {
+    background: var(--bg-card);
+    border: 1px solid #242a38;
+    border-radius: 6px;
+    padding: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+  .control-label {
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--silver);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+  }
+  .paint-zone-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+  }
+  .hex-input {
+    width: 82px !important;
+    font-family: "Courier New", monospace;
+    font-weight: 800;
+    font-size: 11px;
+    text-transform: uppercase;
+    border: 1px solid var(--silver);
+    background: #040508;
+    color: #fff;
+    padding: 4px 6px;
+    flex-shrink: 0;
+  }
+  .color-wheel-input {
+    width: 28px;
+    height: 26px;
+    padding: 0;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .swatch-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    flex: 1;
+    min-width: 120px;
+  }
+  .color-swatch {
+    width: 19px;
+    height: 19px;
+    border: 1px solid #3c465c;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .artisan-banner {
+    background: linear-gradient(90deg, #161922 0%, #242a3a 50%, #161922 100%);
+    border: 1px solid var(--silver);
+    border-radius: 5px;
+    padding: 7px 9px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  /* ========================================================================
+     TAB 4: AUCTIONS (1-LANE BARGAIN BUYER + 5-LANE SYNDICATE SELLER)
+     ======================================================================== */
+  .snipe-spotlight {
+    background: linear-gradient(135deg, #12151f 0%, #090b10 100%);
+    border: 2px solid var(--silver);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+  }
+  .snipe-spotlight.phase-won { border-color: var(--emerald); }
+  .snipe-spotlight.phase-lost { border-color: var(--crimson); }
+  @media (max-width: 480px) {
+    .snipe-spotlight { grid-template-columns: 106px minmax(0, 1fr); gap: 8px; }
+  }
+  .intermission-banner {
+    padding: 5px 8px;
+    font-size: 10px;
+    font-weight: 900;
+    border-radius: 4px;
+    text-transform: uppercase;
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    border: 1px solid currentColor;
+  }
+  .intermission-banner.show { display: flex; }
+
+  /* ========================================================================
+     TAB 5: TABLETOP WARGAME ARENA
+     ======================================================================== */
+  .arena-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 290px minmax(0, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+  @media (max-width: 900px) {
+    .arena-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  .arena-side, .arena-center {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    border-radius: 7px; padding: 10px; min-width: 0;
+  }
+  .arena-center {
+    display: flex; flex-direction: column; gap: 8px; align-items: center;
+  }
+  .dice-tray { display: flex; gap: 12px; justify-content: center; margin: 2px 0; }
+  .die-box {
+    width: 42px; height: 42px;
+    background: linear-gradient(145deg, #1f2430, #090b10);
+    border: 2px solid #fff; border-radius: 6px; color: #fff;
+    font-size: 20px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .combat-log {
+    width: 100%; height: 150px; overflow-y: auto;
+    background: #050609; border: 1px solid var(--border); border-radius: 5px;
+    padding: 6px; font-size: 10px;
+    font-family: "Courier New", monospace; line-height: 1.4;
+  }
+  .fighter-slot {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 5px;
+    padding: 5px; margin-bottom: 5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .fighter-slot.dead { opacity: 0.35; filter: grayscale(1); }
+
+  /* MODALS */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(2, 3, 6, 0.90);
+    backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    padding: 10px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: #0b0d13; border: 2px solid var(--silver); border-radius: 8px;
+    max-width: 820px; width: 100%;
+    padding: 12px; display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 12px;
+    max-height: 92vh; overflow-y: auto;
+  }
+  @media (max-width: 760px) {
+    .modal-box { grid-template-columns: minmax(0, 1fr); }
+  }
+  #inspect-canvas {
+    width: 100%; max-width: 260px; height: auto; aspect-ratio: 1 / 1;
+    display: block; margin: 0 auto;
+    background: radial-gradient(circle at 50% 55%, #232938 0%, #050609 85%);
+    border: 1px solid var(--border); border-radius: 6px;
+    cursor: grab; touch-action: none;
+  }
+  #inspect-canvas:active { cursor: grabbing; }
+
+  /* TOAST */
+  #toast-wrap {
+    position: fixed; bottom: 12px; right: 12px; left: 12px; z-index: 1200;
+    display: flex; flex-direction: column; gap: 5px; pointer-events: none;
+    align-items: center;
+  }
+  .toast-msg {
+    background: rgba(10, 12, 18, 0.96); color: #fff;
+    border-left: 4px solid var(--gold); border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 7px 12px; font-size: 11px; font-weight: 700;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.75);
+    max-width: 460px; width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     ULTRA-COMPACT STICKY MICRO-HUD (< 18% PHONE HEIGHT)
+     ========================================================================== -->
+<header class="hud-header">
+  <!-- ROW 1: TITLE & COMPACT GOD/CODES/SAVE BUTTONS -->
+  <div class="hud-top-row">
+    <div class="brand-title">
+      <span class="brand-badge">128³ SQUAD</span>
+      <span>SAXON &amp; DANE: SHIELDWALL FORGE</span>
+    </div>
+    <div class="hud-actions">
+      <button class="btn btn-xs btn-god" id="hud-god-btn" onclick="Game.activateGodMode()">⚡ GOD: OFF</button>
+      <button class="btn btn-xs btn-silver" onclick="UI.openCodeModal()">📡 CODES</button>
+      <button class="btn btn-xs btn-emerald" onclick="UI.openSaveModal()">💾 SAVE</button>
+    </div>
+  </div>
+
+  <!-- ROW 2: 5-COLUMN TELEMETRY BAR -->
+  <div class="hud-stats">
+    <div class="stat-pill"><span>Credits</span><b class="val-gold" id="hud-funds">◈500</b></div>
+    <div class="stat-pill"><span>Supply</span><b class="val-silver" id="hud-fuel">1,000</b></div>
+    <div class="stat-pill"><span>Owned Units</span><b class="val-emerald" id="hud-fleet">0</b></div>
+    <div class="stat-pill"><span>Codex</span><b class="val-gold" id="hud-codex">0/2000</b></div>
+    <div class="stat-pill"><span>Trials</span><b class="val-purple" id="hud-miles">0/150</b></div>
+  </div>
+
+  <!-- ROW 3 & 4: LOCKED 2x3 NAVIGATION GRID -->
+  <nav class="nav-grid" id="nav-grid">
+    <button class="nav-btn active" data-tab="tab-racks" onclick="UI.switchTab('tab-racks')">1. 🛡️ Owned Units <span class="nav-badge" id="rack-count">0</span></button>
+    <button class="nav-btn" data-tab="tab-forge" onclick="UI.switchTab('tab-forge')">2. 🎨 Custom Forge</button>
+    <button class="nav-btn" data-tab="tab-boxes" onclick="UI.switchTab('tab-boxes')">3. 📦 Forge Crates</button>
+    <button class="nav-btn" data-tab="tab-auctions" onclick="UI.switchTab('tab-auctions')">4. 🔨 Auctions <span class="nav-badge" id="auc-timer">10s</span></button>
+    <button class="nav-btn" data-tab="tab-arena" onclick="UI.switchTab('tab-arena')">5. ⚔️ Battle &amp; Patrol</button>
+    <button class="nav-btn" data-tab="tab-command" onclick="UI.switchTab('tab-command')">6. 📜 High Command</button>
+  </nav>
+</header>
+
+<main class="main-wrap">
+
+  <!-- ======================================================================
+       TAB 1: OWNED UNITS, QOL SUITE, ARMORY TECH & COMMANDERS
+       ====================================================================== -->
+  <section id="tab-racks" class="tab-pane active">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">1. 🛡️ OWNED UNITS // 1-MAN HEROES, 3-MAN TRIOS &amp; 5-MAN SHIELDWALL WARBANDS</div>
+        <div class="section-sub">Tap any miniature or squad diorama for a 60 FPS 3D inspection. Manage your 2,000-unit Codex (`T1–T15`).</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-silver" onclick="Game.autoEquipCommanders()">⚡ Auto-Equip Commanders</button>
+        <button class="btn btn-gold" onclick="Game.autoFillSellerLanes()">🔨 Auto-List 5 Lanes</button>
+        <button class="btn btn-crimson" onclick="Game.batchSalvageDupes()">♻️ Batch Salvage Dupes/Low</button>
+        <button class="btn btn-emerald" onclick="Game.repairAll()">🔧 Repair All</button>
+      </div>
+    </div>
+
+    <!-- QOL FILTER & SORT BAR -->
+    <div class="qol-bar">
+      <label class="chk-pill">
+        <input type="checkbox" id="filter-vault-only" onchange="UI.renderRacks()" />
+        🔒 Vaulted (<span id="vault-inline-count">0</span>)
+      </label>
+      <select id="filter-squad" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+        <option value="ALL">All Squad Sizes (1/3/5)</option>
+        <option value="1">1-Man Solo Champion</option>
+        <option value="3">3-Man Shieldwall Trio</option>
+        <option value="5">5-Man Warband Rank</option>
+      </select>
+      <select id="filter-div" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+        <option value="ALL">All 10 Classes</option>
+      </select>
+      <select id="filter-tier" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+        <option value="ALL">All 15 Tiers (T1–T15)</option>
+      </select>
+      <select id="sort-racks" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+        <option value="VAL_DESC">Sort: Value (High→Low)</option>
+        <option value="TIER_DESC">Sort: Tier (T15→T1)</option>
+        <option value="SQUAD_DESC">Sort: Squad Size (5→1)</option>
+        <option value="DEX_ASC">Sort: Codex (#0001–#2000)</option>
+        <option value="HP_ASC">Sort: Damaged First</option>
+      </select>
+    </div>
+
+    <div class="card-grid" id="rack-list"></div>
+
+    <!-- ARMORY TECH UPGRADES -->
+    <div class="section-bar" style="margin-top:14px;">
+      <div>
+        <div class="section-title">⚙️ SAXON BURH &amp; RUNESMITH ARMORY TECH UPGRADES</div>
+        <div class="section-sub">Permanently boost Patrol Credits (+5%/lvl), Supply Efficiency (-2%/lvl), Shieldwall ATK (+4%/lvl), and Capture Chance (+2%/lvl).</div>
+      </div>
+    </div>
+    <div class="card-grid" id="tech-list"></div>
+
+    <!-- COMMANDERS ROSTER -->
+    <div class="section-bar" style="margin-top:14px;">
+      <div>
+        <div class="section-title">🎖️ EALDORMEN, THEGNS &amp; JARLS COMMANDER ROSTER (<span id="pilot-count">0</span>)</div>
+        <div class="section-sub">Assign Commanders to any 1-Man, 3-Man, or 5-Man Unit for Yield, Speed, Supply, and Armor buffs.</div>
+      </div>
+    </div>
+    <div class="card-grid" id="pilot-list"></div>
+  </section>
+
+  <!-- ======================================================================
+       TAB 2: CUSTOM FORGE, SQUAD BUILDER, PROPORTIONATE BEARDS/BRAIDS & HEX STUDIO
+       ====================================================================== -->
+  <section id="tab-forge" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">2. 🎨 CUSTOM FORGE // 1/3/5-MAN SQUADS, BEARDS &amp; BRAIDS, AND 5-ZONE HEX PAINT</div>
+        <div class="section-sub">Assemble Solo Heroes, 3-Man Trios, or 5-Man Shieldwalls across T1–T15 with trimmed beards, braids, and `#RRGGBB` paint!</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-silver" onclick="CustomForge.randomizeDesign()">🎲 Randomize Squad, Beard &amp; Paint</button>
+      </div>
+    </div>
+
+    <div class="forge-studio-grid">
+      <!-- LEFT: LIVE 60 FPS 3D TURNTABLE -->
+      <div class="forge-preview-box">
+        <canvas id="forge-canvas" width="512" height="512"></canvas>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; font-size:10px; color:var(--text-dim);">
+          <span>🖱️ Drag to Orbit 3D Sculpt</span>
+          <div style="display:flex; gap:4px;">
+            <button class="btn btn-xs" onclick="CustomForge.toggleSpin()">🔄 Spin</button>
+            <button class="btn btn-xs" onclick="CustomForge.zoom(0.3)">➕</button>
+            <button class="btn btn-xs" onclick="CustomForge.zoom(-0.3)">➖</button>
+          </div>
+        </div>
+        <div class="artisan-banner" style="margin-top:8px;" id="forge-last-roll-banner">
+          <span><b>Artisan Appraisal:</b> Craft (1.35x–1.75x) • Journeyman (2x–3.5x) • Artisan (4.5x–8x) • Relic (10x–18x) • <b class="val-gold">★ MASTERWORK (25x–50x!)</b></span>
+        </div>
+      </div>
+
+      <!-- RIGHT: SQUAD SIZE, BEARDS/BRAIDS, MODULAR PARTS & 5-ZONE HEX STUDIO -->
+      <div class="forge-controls-box">
+        <div class="control-group">
+          <div class="control-label">
+            <span>1. Custom Name, Rarity Tier (T1–T15) &amp; Squad Formation</span>
+            <span class="val-gold" id="forge-cost-label">Cost: ◈14 + 15 Supply</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:6px;">
+            <input type="text" id="forge-custom-name" placeholder="Custom Name (optional)" maxlength="34" />
+            <select id="forge-tier-sel" onchange="CustomForge.updateConfig()"></select>
+            <select id="forge-squad-sel" onchange="CustomForge.updateConfig()">
+              <option value="1">👤 1-Man Solo Champion (1.0x)</option>
+              <option value="3">🛡️🛡️🛡️ 3-Man Shieldwall Trio (2.2x Val)</option>
+              <option value="5">⚔️ 5-Man Warband Rank (3.6x Val)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label"><span>2. Proportionate Beard &amp; Braids, Pose, Armor, Helmet &amp; Weapon</span></div>
+          <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:6px;">
+            <div>
+              <div style="font-size:9px; color:var(--gold); font-weight:800; margin-bottom:2px;">BEARD &amp; HAIR BRAIDS (PROPORTIONATE)</div>
+              <select id="forge-beard-sel" onchange="CustomForge.updateConfig()">
+                <option value="trim_fork">Trimmed Forked Viking Beard</option>
+                <option value="twin_braids">Short Beard + Twin Beaded Cheek Braids</option>
+                <option value="saxon_stache">Saxon Drooping Mustache &amp; Neat Chin</option>
+                <option value="royal_plait">Single Braided Chin Plait + Temple Braids</option>
+                <option value="valkyrie_braids">Clean Face + Long Shoulder War-Braids</option>
+                <option value="stubble_locks">Close-Cropped Jaw Beard + Dread-Braids</option>
+                <option value="earl_trim">Short Pointed Earl Goatee &amp; Braids</option>
+                <option value="clean_war">Clean-Shaven + War-Braided Sidelocks</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:9px; color:var(--text-dim); margin-bottom:2px;">DYNAMIC POSE</div>
+              <select id="forge-pose-sel" onchange="CustomForge.updateConfig()">
+                <option value="heroic">Heroic Shieldwall Stand</option>
+                <option value="rock_perch">Offa's Crag Perch (Leg Up)</option>
+                <option value="hover">Valkyrie Raven-Ascent</option>
+                <option value="leap">Berserker Ulfberht Leap</option>
+                <option value="kneel">Wessex Marksman Kneeling</option>
+                <option value="iaijutsu">Huscarl Dane-Axe Stance</option>
+                <option value="spire">High Cross Monolith Lord</option>
+                <option value="strafe">Raider Lunging Charge</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:9px; color:var(--text-dim); margin-bottom:2px;">ARMOR STYLE</div>
+              <select id="forge-armor-sel" onchange="CustomForge.updateConfig()">
+                <option value="standard">Ring-Woven Mail Hauberk</option>
+                <option value="samurai">Layered Scale Lamellar</option>
+                <option value="ronin">Thegn Iron Splint-Plate</option>
+                <option value="heavy">Heavy Huscarl Shield-Bearer</option>
+                <option value="fur">Wolf-Fur Berserker Mantle</option>
+                <option value="skirmish">Ceorl Leather Skirmisher</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:9px; color:var(--text-dim); margin-bottom:2px;">HELMET SCULPT</div>
+              <select id="forge-helm-sel" onchange="CustomForge.updateConfig()">
+                <option value="tvisor">Sutton Hoo Royal Face-Mask</option>
+                <option value="kabuto">Winged Norse Gjermundbu</option>
+                <option value="oni">Boar-Crested Benty Grange</option>
+                <option value="crest">Bretwalda High Crown-Helm</option>
+                <option value="owl">Spectacle Nasal War-Helm</option>
+                <option value="heavy">Heavy Huscarl Brow-Helm</option>
+                <option value="horns">Horned Pagan Ritual Helm</option>
+                <option value="spikes">Spiked Warlord Spangenhelm</option>
+                <option value="cowl">Chainmail Coif &amp; Ranger Cowl</option>
+                <option value="dome">Conical Norman-Saxon Nasal</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:9px; color:var(--text-dim); margin-bottom:2px;">WEAPON SYSTEM</div>
+              <select id="forge-weapon-sel" onchange="CustomForge.updateConfig()">
+                <option value="darksaber">Runic Ulfberht Greatsword</option>
+                <option value="katana">Saxon Broadsword &amp; Seax</option>
+                <option value="naginata">Danish Bearded Dane-Axe</option>
+                <option value="amban">Wessex Yew Longbow</option>
+                <option value="rotary">Heavy Two-Handed Hewing Axe</option>
+                <option value="dual">Dual Throwing Franciscas</option>
+                <option value="spear">Boar Spear &amp; Linden-Shield</option>
+                <option value="hammer">Wayland Hammer &amp; Ingot</option>
+                <option value="pyro">Pitch Torch &amp; Odin Ravens</option>
+                <option value="blades">Dual Langseax War-Knives</option>
+                <option value="eweb">Heavy Crossbow Arbalest</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:9px; color:var(--text-dim); margin-bottom:2px;">BACK RIG &amp; PLINTH</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px;">
+                <select id="forge-back-sel" onchange="CustomForge.updateConfig()">
+                  <option value="both">Shield + Cloak</option>
+                  <option value="sashimono">Wyrm Banner</option>
+                  <option value="jetpack">Back Shield</option>
+                  <option value="cape">Royal Cloak</option>
+                  <option value="fly">Raven Pelts</option>
+                  <option value="katanas">Crossed Axes</option>
+                </select>
+                <select id="forge-plinth-sel" onchange="CustomForge.updateConfig()">
+                  <option value="boulder">Mossy Crag</option>
+                  <option value="spire">Saxon Cross</option>
+                  <option value="lava">Longship Fire</option>
+                  <option value="anvil">Forge Anvil</option>
+                  <option value="smoke">Sea Mist</option>
+                  <option value="ruins">Stone Ruins</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-ZONE HEX COLOR STUDIO -->
+        <div class="control-group" id="hex-studio-zones"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-silver" style="flex:1; padding:9px;" onclick="CustomForge.forgeAndCommission(false)">
+            🔨 FORGE TO OWNED UNITS
+          </button>
+          <button class="btn btn-gold" style="flex:1; padding:9px;" onclick="CustomForge.forgeAndCommission(true)">
+            💰 FORGE &amp; AUCTION NOW
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       TAB 3: FORGE CRATES & SUPPLY DEPOT
+       ====================================================================== -->
+  <section id="tab-boxes" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">3. 📦 FORGE CRATES &amp; SUPPLY DEPOT (2,000 CODEX &amp; SQUAD WARBOXES)</div>
+        <div class="section-sub">Unbox 1-Man Heroes, 3-Man Shieldwall Trios, and 5-Man Warbands across Tiers T1–T15 in 1x/5x/10x batches.</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-silver" onclick="Game.buyFuel(500)">🍖 +500 Supply (◈125)</button>
+        <button class="btn btn-silver" onclick="Game.buyFuel(2500)">🍖 +2.5K Supply (◈625)</button>
+        <button class="btn btn-silver" onclick="Game.buyFuel(10000)">🍖 +10K Supply (◈2,500)</button>
+      </div>
+    </div>
+    <div class="card-grid" id="warbox-list"></div>
+
+    <div class="section-bar" style="margin-top:14px;">
+      <div>
+        <div class="section-title">🎖️ EALDORMAN &amp; JARL COMMANDER PODS</div>
+        <div class="section-sub">Recruit high-ranking Anglo-Saxon Ealdormen &amp; Norse Jarls (`CMD-XXXX`) to lead your units.</div>
+      </div>
+    </div>
+    <div class="card-grid" id="pilotbox-list"></div>
+  </section>
+
+  <!-- ======================================================================
+       TAB 4: AUCTIONS (1-LANE BARGAIN BUYER WITH "BID" + 5-LANE SELLER)
+       ====================================================================== -->
+  <section id="tab-auctions" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">4A. 🔨 1-LANE BARGAIN BUYER AUCTION (10.0s LIVE + 3.0s VERDICT // +◈1 BIDS)</div>
+        <div class="section-sub">Starts at 12%–20% value! Use the BID buttons below to outbid rival Earls whenever time remains (&gt; 0.0s).</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-xs btn-silver" onclick="Game.forceNextBuyerLot()">⏭️ Next Lot</button>
+      </div>
+    </div>
+
+    <div class="snipe-spotlight" id="buyer-spotlight-card">
+      <div class="unit-thumb-wrap" style="height:128px;" onclick="Inspector.open('BUYER', 0)">
+        <img class="unit-thumb" id="buyer-thumb" src="" alt="Bargain Lot" />
+        <span class="tier-tag" id="buyer-tier-tag">T1</span>
+        <span class="squad-tag" id="buyer-squad-tag">1-MAN</span>
+        <span class="dex-tag" id="buyer-dex-tag">#0001</span>
+        <span class="inspect-hint">🔍 3D</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:5px; min-width:0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+          <div class="unit-title" style="font-size:13px;" id="buyer-unit-title">Loading Lot...</div>
+          <span id="buyer-timer-badge" style="background:#1e293b; border:1px solid #fff; border-radius:4px; color:#fff; padding:2px 7px; font-weight:900; font-size:11px; font-family:'Courier New',monospace;">
+            ⏱️ 10.0s
+          </span>
+        </div>
+
+        <div class="intermission-banner" id="buyer-verdict-banner">
+          <span id="buyer-verdict-text">LOT CLOSED</span>
+          <span id="buyer-verdict-countdown" style="font-family:'Courier New',monospace;">NEXT IN 3.0s</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:4px; background:#07080c; border:1px solid var(--border); border-radius:4px; padding:5px; font-size:10px;">
+          <div>Appraisal: <b class="val-gold" id="buyer-true-val">◈0</b></div>
+          <div>Current Bid: <b class="val-silver" id="buyer-cur-bid">◈0</b></div>
+          <div>Est. Profit: <b class="val-emerald" id="buyer-flip-profit">+◈0</b></div>
+          <div>High Bidder: <b id="buyer-high-bidder">Mercian Trader</b></div>
+        </div>
+
+        <!-- STRICTLY LABELED "BID" BUTTONS (NEVER "SNIPE") -->
+        <div class="btn-row">
+          <button class="btn btn-emerald" id="buyer-bid-btn-1" style="font-size:11px; padding:8px 8px; flex:1;" onclick="Game.bidOnBuyerAuction(1)">
+            🔨 BID (+◈1)
+          </button>
+          <button class="btn btn-gold" id="buyer-bid-btn-5" style="font-size:11px; padding:8px 8px; flex:1;" onclick="Game.bidOnBuyerAuction(5)">
+            🔨 BID (+◈5)
+          </button>
+          <button class="btn btn-purple" id="buyer-bid-btn-25" style="font-size:11px; padding:8px 8px; flex:1;" onclick="Game.bidOnBuyerAuction(25)">
+            🔨 BID (+◈25)
+          </button>
+          <button class="btn btn-silver" style="padding:8px 8px;" onclick="Inspector.open('BUYER', 0)">🔍 3D</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-bar">
+      <div>
+        <div class="section-title">4B. 💰 5-LANE SYNDICATE SELLER AUCTIONS (2x–20x [BID WAR] SPIKES!)</div>
+        <div class="section-sub">List up to 5 Owned Units (`20.0s` timer, `40%` start bid, `10%` NPC bid/tick, `1.5%` chance for `2x–20x [BID WAR] Spike!`).</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-gold" onclick="Game.autoFillSellerLanes()">🚀 Auto-Fill All 5 Seller Lanes</button>
+      </div>
+    </div>
+    <div class="card-grid" id="seller-auction-list"></div>
+  </section>
+
+  <!-- ======================================================================
+       TAB 5: BATTLE & PATROL (1v1 / 3v3 / 5v5 ARENA + 6 SECTOR PATROLS)
+       ====================================================================== -->
+  <section id="tab-arena" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">5A. ⚔️ 1v1 / 3v3 / 5v5 SHIELDWALL TABLETOP WARGAME ARENA</div>
+        <div class="section-sub">2D6 Dice + 5 Tactical Orders + A&gt;B&gt;C&gt;A Counter Triangle (+45% DMG) + 55% Credit Spoils &amp; 45% Unit Capture!</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-silver" onclick="Arena.startMatch(1)">⚔️ 1v1 Holmgang</button>
+        <button class="btn btn-gold" onclick="Arena.startMatch(3)">⚔️ 3v3 Skirmish</button>
+        <button class="btn btn-crimson" onclick="Arena.startMatch(5)">⚔️ 5v5 Shieldwall</button>
+      </div>
+    </div>
+
+    <div class="arena-grid">
+      <div class="arena-side">
+        <div class="section-title" style="margin-bottom:6px;">🛡️ YOUR DEPLOYED SHIELDWALL</div>
+        <div id="arena-player-team"></div>
+      </div>
+
+      <div class="arena-center">
+        <div style="font-size:11px; font-weight:800; color:var(--gold); text-align:center;" id="arena-status-banner">
+          Tap 1v1, 3v3, or 5v5 above to auto-deploy your strongest Units &amp; Squads!
+        </div>
+        <div class="dice-tray">
+          <div class="die-box" id="die-1">6</div>
+          <div class="die-box" id="die-2">6</div>
+        </div>
+        <div class="btn-row" style="justify-content:center;">
+          <button class="btn btn-crimson" onclick="Arena.issueOrder('CHARGE')">🐗 Charge</button>
+          <button class="btn btn-silver" onclick="Arena.issueOrder('VOLLEY')">🏹 Volley</button>
+          <button class="btn btn-purple" onclick="Arena.issueOrder('ARCANE')">🐦‍⬛ Ravens</button>
+          <button class="btn btn-gold" onclick="Arena.issueOrder('WALL')">🛡️ Shieldwall</button>
+          <button class="btn btn-emerald" onclick="Arena.issueOrder('RALLY')">📯 Wyrd Rally</button>
+        </div>
+        <div class="combat-log" id="arena-log"></div>
+      </div>
+
+      <div class="arena-side">
+        <div class="section-title" style="margin-bottom:6px; color:var(--crimson);">🎯 RIVAL DANELAW WARBAND</div>
+        <div id="arena-enemy-team"></div>
+      </div>
+    </div>
+
+    <!-- 6 COASTAL & SHIRE PATROLS -->
+    <div class="section-bar" style="margin-top:14px;">
+      <div>
+        <div class="section-title">5B. 🎯 6 ANGLO-SAXON SHIRE &amp; COASTAL RAID PATROLS</div>
+        <div class="section-sub">Assign Owned Units to patrol sectors for automated Credit payouts every cycle.</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-emerald" onclick="Game.assignAllIdleToPatrol()">🚩 Dispatch All Idle Patrols</button>
+        <button class="btn btn-crimson" onclick="Game.recallAllPatrols()">🛑 Recall All</button>
+      </div>
+    </div>
+    <div class="card-grid" id="sector-list"></div>
+  </section>
+
+  <!-- ======================================================================
+       TAB 6: HIGH COMMAND (AUTOMATIONS, 6 COMMISSIONS & 150 TRIALS)
+       ====================================================================== -->
+  <section id="tab-command" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">6. 📜 HIGH COMMAND // AUTOMATIONS, 6 WITAN COMMISSIONS &amp; 150 TRIALS</div>
+        <div class="section-sub">Toggle Shire Automations, fulfill rotating Guild Commissions, and claim 150 Chronicle Trials across 6 Books.</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn" id="tog-automarch" onclick="Game.toggleAuto('autoMarch')">🤖 Auto-March: OFF</button>
+        <button class="btn" id="tog-autorepair" onclick="Game.toggleAuto('autoRepair')">🔧 Auto-Repair: OFF</button>
+        <button class="btn" id="tog-autosupply" onclick="Game.toggleAuto('autoSupply')">🍖 Auto-Supply: OFF</button>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin: 8px 0 6px;">📜 6 ROTATING WITAN ROYAL COMMISSIONS (CREDITS + FREE UNIT)</div>
+    <div class="card-grid" id="commission-list"></div>
+
+    <div class="section-bar" style="margin-top:14px;">
+      <div>
+        <div class="section-title">🏆 150 CHRONICLE TRIALS OF THE BRETWALDA (6 BOOKS)</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <select id="mile-book-filter" style="width:auto;" onchange="UI.renderMilestones()">
+          <option value="ALL">All 6 Books (150 Trials)</option>
+          <option value="0">Book I: Fyrd Levy (1–25)</option>
+          <option value="1">Book II: Wayland's Forge (26–50)</option>
+          <option value="2">Book III: Shieldwall Blood (51–75)</option>
+          <option value="3">Book IV: Royal Hoard (76–100)</option>
+          <option value="4">Book V: Guild Merchant (101–125)</option>
+          <option value="5">Book VI: Bretwalda &amp; Allfather (126–150)</option>
+        </select>
+        <button class="btn btn-gold" onclick="Game.claimAllMilestones()">✨ Claim All Ready</button>
+      </div>
+    </div>
+    <div class="card-grid" id="milestone-list"></div>
+  </section>
+
+</main>
+
+<!-- 512x512 60 FPS 3D VOXEL INSPECTOR MODAL -->
+<div class="modal-backdrop" id="inspect-modal">
+  <div class="modal-box">
+    <div>
+      <canvas id="inspect-canvas" width="512" height="512"></canvas>
+      <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:10px; color:var(--text-dim);">
+        <span>🖱️ Drag to Orbit 3D Sculpt</span>
+        <span id="inspect-vox-stats">128³ Isolated Snapshot</span>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:space-between; gap:8px; min-width:0;">
+      <div>
+        <div class="section-title" id="insp-name" style="font-size:14px;">Miniature Name</div>
+        <div id="insp-sub" style="font-size:11px; color:var(--gold); margin:3px 0 8px;">Class &amp; Finish</div>
+        <div id="insp-details" style="font-size:11px; line-height:1.5; background:var(--bg-deep); padding:8px; border:1px solid var(--border); border-radius:5px;"></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div class="btn-row">
+          <button class="btn btn-silver" style="flex:1;" onclick="Inspector.toggleSpin()">🔄 Spin</button>
+          <button class="btn btn-gold" style="flex:1;" onclick="Inspector.zoom(0.35)">➕ Zoom</button>
+          <button class="btn btn-gold" style="flex:1;" onclick="Inspector.zoom(-0.35)">➖ Out</button>
+          <button class="btn" style="flex:1;" onclick="Inspector.resetCam()">🎯 Reset</button>
+        </div>
+        <div style="background:var(--bg-deep); padding:6px; border:1px solid var(--border); border-radius:4px; font-size:10px; display:flex; justify-content:space-between; align-items:center; gap:6px;">
+          <div style="overflow:hidden; text-overflow:ellipsis;"><b>Code:</b> <code id="insp-code" style="color:#fff;">WF-000</code></div>
+          <button class="btn btn-xs btn-silver" onclick="Inspector.copyCode()">📋 Copy</button>
+        </div>
+        <button class="btn btn-crimson" style="padding:9px;" onclick="Inspector.close()">✖ Close 3D Inspector</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BASE36 TRADE CODE MODAL -->
+<div class="modal-backdrop" id="code-modal">
+  <div class="modal-box" style="grid-template-columns: minmax(0, 1fr); max-width: 480px;">
+    <div>
+      <div class="section-title">📡 BASE36 TRADE CODE TRANSCEIVER</div>
+      <div class="section-sub" style="margin:6px 0 10px;">
+        Import any Collector Code (<code>WF-XXX</code>), Custom Squad/Paint Code (<code>WFC-...</code>), or Commander Code (<code>CMD-XXXX</code>).
+      </div>
+      <div style="display:flex; gap:6px; margin-bottom:10px;">
+        <input type="text" id="trade-code-input" placeholder="Paste WF-..., WFC-..., or CMD-..." style="flex:1;" />
+        <button class="btn btn-emerald" onclick="Game.importTradeCode()">📥 Import</button>
+      </div>
+      <button class="btn btn-crimson" style="width:100%;" onclick="document.getElementById('code-modal').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE / LOAD / BACKUP MODAL -->
+<div class="modal-backdrop" id="save-modal">
+  <div class="modal-box" style="grid-template-columns: minmax(0, 1fr); max-width: 520px;">
+    <div>
+      <div class="section-title">💾 WINCHESTER CHRONICLE SAVE &amp; DATA VAULT</div>
+      <div class="section-sub" style="margin:6px 0 10px;">
+        Thumbnail-stripped state auto-saves to <code>localStorage</code> every 5 seconds. Export or import backup strings below.
+      </div>
+      <div class="btn-row" style="margin-bottom:10px;">
+        <button class="btn btn-emerald" style="flex:1;" onclick="SaveSystem.saveToLocal(true)">💾 Save Now</button>
+        <button class="btn btn-silver" style="flex:1;" onclick="SaveSystem.exportSaveString()">📤 Export String</button>
+        <button class="btn btn-gold" style="flex:1;" onclick="SaveSystem.importSaveString()">📥 Load String</button>
+      </div>
+      <textarea id="save-string-box" rows="4" placeholder="Export or paste backup Save String here..." style="width:100%; background:#050608; color:#fff; border:1px solid var(--border); border-radius:4px; padding:8px; font-family:monospace; font-size:10px; margin-bottom:10px;"></textarea>
+      <div style="display:flex; justify-content:space-between; gap:8px;">
+        <button class="btn btn-crimson" onclick="SaveSystem.hardReset()">⚠️ Wipe Save</button>
+        <button class="btn btn-silver" onclick="document.getElementById('save-modal').classList.remove('open')">✖ Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+
+<script>
+/* ============================================================================
+   1. 15 RARITY TIERS (T1–T15), 2,000 CODEX MATRIX, SQUADS & BEARD/BRAID STYLES
+   ============================================================================ */
+const TIERS = [
+  { id: 0,  code: 'T1',  name: 'Thrall Levy',             finish: 'Bog-Iron & Ash',          val: 15,      hp: 110,   atk: 15,   color: '#94a3b8', palShift: [115, 125, 138], emissive: [220, 230, 242] },
+  { id: 1,  code: 'T2',  name: 'Shire Fyrdman',           finish: 'Oiled Ring-Mail',         val: 45,      hp: 165,   atk: 24,   color: '#cbd5e1', palShift: [158, 170, 184], emissive: [245, 158, 11] },
+  { id: 2,  code: 'T3',  name: 'Shieldwall Drengr',       finish: 'Bright Wessex Steel',     val: 135,     hp: 250,   atk: 38,   color: '#22c55e', palShift: [212, 224, 238], emissive: [255, 255, 255] },
+  { id: 3,  code: 'T4',  name: 'Hearthweru Guard',        finish: 'Hearth-Quenched Bronze',  val: 420,     hp: 390,   atk: 60,   color: '#10b981', palShift: [188, 112, 56],  emissive: [255, 125, 35] },
+  { id: 4,  code: 'T5',  name: 'Burghal Watchman',        finish: 'Northumbrian Woad-Steel', val: 1300,    hp: 620,   atk: 95,   color: '#38bdf8', palShift: [55, 122, 210],  emissive: [125, 211, 252] },
+  { id: 5,  code: 'T6',  name: 'Royal Huscarl',           finish: 'Mercian Gilded Mail',     val: 4200,    hp: 1020,  atk: 150,  color: '#facc15', palShift: [230, 180, 58],  emissive: [253, 224, 71] },
+  { id: 6,  code: 'T7',  name: 'Banner-Thegn',            finish: 'Blood-Quenched Iron',     val: 13500,   hp: 1680,  atk: 245,  color: '#a855f7', palShift: [195, 42, 52],   emissive: [255, 75, 75] },
+  { id: 7,  code: 'T8',  name: 'Jomsviking Mercenary',    finish: 'Jomsborg Raven-Steel',    val: 42000,   hp: 2800,  atk: 405,  color: '#d946ef', palShift: [72, 85, 112],   emissive: [74, 222, 128] },
+  { id: 8,  code: 'T9',  name: 'Sutton Hoo Mound-Guard',  finish: 'Whalebone & Garnet Gold', val: 110000,  hp: 4700,  atk: 660,  color: '#f59e0b', palShift: [222, 202, 148], emissive: [250, 204, 21] },
+  { id: 9,  code: 'T10', name: 'Ealdorman / Jarl',        finish: 'Pattern-Welded Damascus', val: 250000,  hp: 8000,  atk: 1120, color: '#ef4444', palShift: [152, 188, 220], emissive: [255, 110, 110] },
+  { id: 10, code: 'T11', name: 'King\'s Thegn',           finish: 'Winchester Silver-Gilt',  val: 500000,  hp: 13200, atk: 1850, color: '#38bdf8', palShift: [225, 235, 250], emissive: [56, 189, 248] },
+  { id: 11, code: 'T12', name: 'High Drengr',             finish: 'Runic Meteoric Iron',     val: 1000000, hp: 21500, atk: 3000, color: '#c084fc', palShift: [98, 68, 145],   emissive: [216, 180, 254] },
+  { id: 12, code: 'T13', name: 'Bretwalda Guard',         finish: 'Imperial Wyvern Gold',    val: 2000000, hp: 35000, atk: 4850, color: '#fbbf24', palShift: [245, 190, 42],  emissive: [254, 240, 138] },
+  { id: 13, code: 'T14', name: 'Valkyrie Einherjar',      finish: 'Asgardian Frost-Silver',  val: 3500000, hp: 56000, atk: 7800, color: '#2dd4bf', palShift: [185, 245, 255], emissive: [94, 234, 212] },
+  { id: 14, code: 'T15', name: 'Allfather Mythic',        finish: 'Odin\'s Gungnir Obsidian',val: 5000000, hp: 90000, atk: 12500,color: '#f43f5e', palShift: [32, 36, 48],    emissive: [255, 255, 255] }
+];
+
+const FACTIONS = [
+  { id: 0, name: 'Kingdom of Wessex',       accent: [220, 38, 38],  cape: [125, 24, 28] },
+  { id: 1, name: 'Kingdom of Mercia',       accent: [234, 179, 8],  cape: [30, 58, 118] },
+  { id: 2, name: 'Kingdom of Northumbria',  accent: [217, 119, 6],  cape: [110, 32, 32] },
+  { id: 3, name: 'East Anglia Wuffingas',   accent: [56, 189, 248], cape: [28, 48, 88] },
+  { id: 4, name: 'Dane Guthrum Host',       accent: [225, 45, 65],  cape: [28, 28, 36] },
+  { id: 5, name: 'Jomsvikings Brotherhood', accent: [180, 195, 210],cape: [34, 46, 68] },
+  { id: 6, name: 'Rus Varangian Guard',     accent: [244, 63, 94],  cape: [98, 18, 36] },
+  { id: 7, name: 'Hordaland Sea-Raiders',   accent: [20, 184, 166], cape: [22, 78, 74] },
+  { id: 8, name: 'Danelaw Five Boroughs',   accent: [168, 85, 247], cape: [52, 26, 84] },
+  { id: 9, name: 'Royal Household Huscarls',accent: [245, 158, 11], cape: [42, 34, 64] }
+];
+
+const ARCHETYPES = [
+  { id: 0, key: 'BRETWALDA_CHAMP', group: 'B', range: 25, pose: 'leap',       armor: 'standard', helm: 'tvisor', weapon: 'darksaber', back: 'both',      plinth: 'spire',   name: 'Bretwalda Ulfberht Champion' },
+  { id: 1, key: 'WESSEX_MARKSMAN', group: 'C', range: 95, pose: 'kneel',      armor: 'skirmish', helm: 'cowl',   weapon: 'amban',     back: 'cape',      plinth: 'boulder', name: 'Wessex Yew-Bow Marksman' },
+  { id: 2, key: 'HUSCARL_HEWER',   group: 'A', range: 30, pose: 'heroic',     armor: 'heavy',    helm: 'heavy',  weapon: 'rotary',    back: 'jetpack',   plinth: 'lava',    name: 'Danish Great-Axe Huscarl' },
+  { id: 3, key: 'SAXON_THEGN',     group: 'A', range: 25, pose: 'iaijutsu',   armor: 'samurai',  helm: 'kabuto', weapon: 'katana',    back: 'sashimono', plinth: 'boulder', name: 'Saxon Ring-Sword & Seax Thegn' },
+  { id: 4, key: 'BOAR_EALDORMAN',  group: 'A', range: 35, pose: 'rock_perch', armor: 'ronin',    helm: 'oni',    weapon: 'naginata',  back: 'katanas',   plinth: 'spire',   name: 'Benty Grange Dane-Axe Ealdorman' },
+  { id: 5, key: 'WAYLAND_SMITH',   group: 'A', range: 30, pose: 'heroic',     armor: 'fur',      helm: 'horns',  weapon: 'hammer',    back: 'cape',      plinth: 'anvil',   name: 'Wayland Runesmith Forgemaster' },
+  { id: 6, key: 'RAVEN_TORCHBEAR', group: 'C', range: 40, pose: 'rock_perch', armor: 'standard', helm: 'owl',    weapon: 'pyro',      back: 'both',      plinth: 'lava',    name: 'Pitch-Torch & Raven Warlock' },
+  { id: 7, key: 'FRANCISCA_RAIDER',group: 'B', range: 65, pose: 'hover',      armor: 'skirmish', helm: 'owl',    weapon: 'dual',      back: 'fly',       plinth: 'smoke',   name: 'Francisca Throwing-Axe Raider' },
+  { id: 8, key: 'ULFHEDNAR_SEAX',  group: 'C', range: 35, pose: 'strafe',     armor: 'fur',      helm: 'spikes', weapon: 'blades',    back: 'fly',       plinth: 'smoke',   name: 'Dual-Seax Ulfhednar Berserker' },
+  { id: 9, key: 'SUTTON_SENTINEL', group: 'C', range: 75, pose: 'spire',      armor: 'heavy',    helm: 'crest',  weapon: 'spear',     back: 'both',      plinth: 'ruins',   name: 'Sutton Hoo Boar-Spear Sentinel' }
+];
+
+const BEARD_STYLES = [
+  { id: 'trim_fork',       name: 'Trimmed Forked Viking Beard' },
+  { id: 'twin_braids',     name: 'Short Beard + Twin Cheek Braids' },
+  { id: 'saxon_stache',    name: 'Saxon Drooping Mustache & Chin' },
+  { id: 'royal_plait',     name: 'Single Braided Plait + Temple Braids' },
+  { id: 'valkyrie_braids', name: 'Clean Face + Long Shoulder War-Braids' },
+  { id: 'stubble_locks',   name: 'Close-Cropped Jaw Beard + Braids' },
+  { id: 'earl_trim',       name: 'Short Pointed Earl Goatee & Braids' },
+  { id: 'clean_war',       name: 'Clean-Shaven + Braided Sidelocks' }
+];
+
+const SQUAD_CONFIGS = {
+  1: { size: 1, label: '1-MAN SOLO',    short: '1-MAN', valMult: 1.0, hpMult: 1.0,  atkMult: 1.0  },
+  3: { size: 3, label: '3-MAN TRIO',    short: '3-MAN', valMult: 2.2, hpMult: 2.35, atkMult: 2.15 },
+  5: { size: 5, label: '5-MAN WARBAND', short: '5-MAN', valMult: 3.6, hpMult: 3.85, atkMult: 3.45 }
+};
+
+const QUICK_SWATCHES = [
+  '#D6E0EE', '#1E222B', '#6C7684', '#EEB830', '#D02430', '#2D73DA',
+  '#E0D4B8', '#1CAC60', '#F26020', '#9E48E8', '#00F5D4', '#FFFFFF'
+];
+
+const ARTISAN_GRADES = [
+  { id: 0, name: 'Ceorl Village Craft',     minM: 1.35, maxM: 1.75, chance: 0.50, color: '#94a3b8' },
+  { id: 1, name: 'Burh Smith Forged',       minM: 2.00, maxM: 3.50, chance: 0.25, color: '#34d399' },
+  { id: 2, name: 'Winchester Royal Artisan',minM: 4.50, maxM: 8.00, chance: 0.14, color: '#38bdf8' },
+  { id: 3, name: 'Sutton Hoo Sacred Relic', minM: 10.0, maxM: 18.0, chance: 0.07, color: '#c084fc' },
+  { id: 4, name: '★ MASTERWORK ★',          minM: 25.0, maxM: 50.0, chance: 0.04, color: '#f5b041' }
+];
+
+const SECTORS = [
+  { id: 0, name: 'Wessex Chalk Downs & Burhs',   minTier: 0,  cycleSec: 12, baseReward: 35,    fuelCost: 4,  desc: 'Patrol the fortified hilltop burhs and ancient white-horse ridges.' },
+  { id: 1, name: 'Mercian Offa\'s Dyke Marches', minTier: 2,  cycleSec: 16, baseReward: 120,   fuelCost: 8,  desc: 'Guard the western earthwork frontier and levy merchant tolls.' },
+  { id: 2, name: 'Lindisfarne Tidal Causeway',   minTier: 4,  cycleSec: 20, baseReward: 420,   fuelCost: 14, desc: 'Intercept Norse longships beaching near the island priory.' },
+  { id: 3, name: 'Thames Estuary Watch-Forts',   minTier: 6,  cycleSec: 24, baseReward: 1650,  fuelCost: 24, desc: 'Blockade dragon-prowed fleets attempting to row upriver.' },
+  { id: 4, name: 'Jorvik Danelaw Five Boroughs', minTier: 9,  cycleSec: 28, baseReward: 7500,  fuelCost: 40, desc: 'Clash with armored Jarls and reclaim Northumbrian silver hoards.' },
+  { id: 5, name: 'Sutton Hoo & Bifrost Mounds',  minTier: 11, cycleSec: 32, baseReward: 34000, fuelCost: 65, desc: 'Defend the sacred ship-burial treasures of the Wuffinga & Einherjar Kings.' }
+];
+
+// Deterministic 1..2000 Codex Mapping across 15 Tiers, 10 Factions, 10 Classes & Squads
+function calcCodexNum(tier, faction, division, squadSize = 1) {
+  const t = Math.max(0, Math.min(14, tier | 0));
+  const f = Math.max(0, Math.min(9, faction | 0));
+  const d = Math.max(0, Math.min(9, division | 0));
+  const sqIdx = squadSize === 5 ? 2 : (squadSize === 3 ? 1 : 0);
+  // Map cleanly and deterministically into 1..2000:
+  // First 1,500 entries: 15 Tiers x 10 Factions x 10 Classes (1..1500)
+  // Entries 1,501..2,000: Multi-Man Elite Squad Codex (3-Man & 5-Man formations across Tiers/Factions/Classes)
+  if (sqIdx === 0) {
+    return (t * 100) + (f * 10) + d + 1;
+  }
+  const squadOffset = ((sqIdx - 1) * 250) + ((t * 17 + f * 7 + d) % 250);
+  return 1501 + squadOffset;
+}
+
+function decodeCodexNum(dexNum) {
+  const clamped = Math.max(1, Math.min(2000, dexNum | 0));
+  if (clamped <= 1500) {
+    const idx = clamped - 1;
+    const tier = Math.floor(idx / 100);
+    const rem = idx % 100;
+    const faction = Math.floor(rem / 10);
+    const division = rem % 10;
+    const beard = BEARD_STYLES[(tier + faction + division) % BEARD_STYLES.length].id;
+    return { tier, faction, division, squadSize: 1, beard };
+  } else {
+    const sIdx = clamped - 1501;
+    const squadSize = sIdx >= 250 ? 5 : 3;
+    const rem = sIdx % 250;
+    const tier = rem % 15;
+    const faction = Math.floor(rem / 15) % 10;
+    const division = (rem + tier) % 10;
+    const beard = BEARD_STYLES[(clamped * 3) % BEARD_STYLES.length].id;
+    return { tier, faction, division, squadSize, beard };
+  }
+}
+
+function hexToRgbArray(hex, fallback = [200, 210, 225]) {
+  if (!hex || typeof hex !== 'string') return fallback;
+  const clean = hex.trim().replace(/^#/, '');
+  if (/^[0-9A-Fa-f]{3}$/.test(clean)) {
+    return [
+      parseInt(clean[0] + clean[0], 16),
+      parseInt(clean[1] + clean[1], 16),
+      parseInt(clean[2] + clean[2], 16)
+    ];
+  }
+  if (/^[0-9A-Fa-f]{6}$/.test(clean)) {
+    return [
+      parseInt(clean.slice(0, 2), 16),
+      parseInt(clean.slice(2, 4), 16),
+      parseInt(clean.slice(4, 6), 16)
+    ];
+  }
+  return fallback;
+}
+
+function fmtNum(n) {
+  return Math.round(n || 0).toLocaleString('en-US');
+}
+
+/* ============================================================================
+   2. SINGLE SHARED 128³ SPARSE 3D VOXEL KERNEL + ISOLATED SURFACE SNAPSHOTS
+   ============================================================================ */
+class VoxelWarforgeEngine {
+  constructor() {
+    this.width = 512; this.height = 512;
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = 512; this.canvas.height = 512;
+    this.ctx = this.canvas.getContext('2d');
+
+    this.thumbCanvas = document.createElement('canvas');
+    this.thumbCanvas.width = 128; this.thumbCanvas.height = 128;
+    this.thumbCtx = this.thumbCanvas.getContext('2d');
+    this.thumbCtx.imageSmoothingEnabled = false;
+
+    this.DIM = 128;
+    this.grid = new Uint8Array(128 * 128 * 128);
+    this.stampGrid = new Uint16Array(128 * 128 * 128);
+    this.currentStamp = 1;
+
+    this.occupiedList = new Int32Array(260000);
+    this.occupiedCount = 0;
+
+    const MAX_SURF = 150000;
+    this.MAX_SURF = MAX_SURF;
+    this.surfX = new Int16Array(MAX_SURF);
+    this.surfY = new Int16Array(MAX_SURF);
+    this.surfZ = new Int16Array(MAX_SURF);
+    this.surfColTop = new Uint32Array(MAX_SURF);
+    this.surfColLeft = new Uint32Array(MAX_SURF);
+    this.surfColRight = new Uint32Array(MAX_SURF);
+    this.surfCount = 0;
+
+    this.zBuf = new Float32Array(512 * 512);
+    this.imgData = this.ctx.createImageData(512, 512);
+    this.pixels = new Uint32Array(this.imgData.data.buffer);
+
+    this.paletteRGB = new Uint32Array(256);
+    this.materialPriority = new Uint32Array(256);
+    this.isEmissive = new Uint8Array(256);
+
+    // Transform state for multi-model 1/3/5-man squad scaling
+    this.txOrigin = 64;
+    this.tyOrigin = 15;
+    this.tzOrigin = 64;
+    this.tScale = 1.0;
+  }
+
+  clearGrid() {
+    this.currentStamp++;
+    if (this.currentStamp >= 65530) {
+      this.stampGrid.fill(0);
+      this.currentStamp = 1;
+    }
+    this.occupiedCount = 0;
+    this.surfCount = 0;
+    this.txOrigin = 64;
+    this.tyOrigin = 15;
+    this.tzOrigin = 64;
+    this.tScale = 1.0;
+  }
+
+  setTransform(ox, oy, oz, scale) {
+    this.txOrigin = ox;
+    this.tyOrigin = oy;
+    this.tzOrigin = oz;
+    this.tScale = scale;
+  }
+
+  resetTransform() {
+    this.txOrigin = 64;
+    this.tyOrigin = 15;
+    this.tzOrigin = 64;
+    this.tScale = 1.0;
+  }
+
+  mapCoord(x, y, z) {
+    if (this.tScale === 1.0 && this.txOrigin === 64 && this.tyOrigin === 15 && this.tzOrigin === 64) {
+      return [x | 0, y | 0, z | 0];
+    }
+    const mx = Math.round(this.txOrigin + (x - 64) * this.tScale);
+    const my = Math.round(this.tyOrigin + (y - 15) * this.tScale);
+    const mz = Math.round(this.tzOrigin + (z - 64) * this.tScale);
+    return [mx, my, mz];
+  }
+
+  packRGB(r, g, b) {
+    const cr = Math.max(0, Math.min(255, r | 0));
+    const cg = Math.max(0, Math.min(255, g | 0));
+    const cb = Math.max(0, Math.min(255, b | 0));
+    return (255 << 24) | (cb << 16) | (cg << 8) | cr;
+  }
+
+  setupPalette(unit) {
+    const tData = TIERS[unit.tier] || TIERS[0];
+    const fac = FACTIONS[unit.faction || 0] || FACTIONS[0];
+    this.isEmissive.fill(0);
+    this.materialPriority.fill(1);
+
+    const fillRamp = (startIdx, count, r, g, b, prio, emis = 0) => {
+      for (let i = 0; i < count; i++) {
+        const t = count > 1 ? (i / (count - 1)) : 0.5;
+        const shade = 0.60 + t * 0.60;
+        this.paletteRGB[startIdx + i] = this.packRGB(r * shade, g * shade, b * shade);
+        this.materialPriority[startIdx + i] = prio;
+        this.isEmissive[startIdx + i] = emis;
+      }
+    };
+
+    const hexes = unit.customHexColors;
+    const cPrim  = hexes ? hexToRgbArray(hexes[0], tData.palShift) : tData.palShift;
+    const cSec   = hexes ? hexToRgbArray(hexes[1], fac.accent)     : fac.accent;
+    const cHeart = hexes ? hexToRgbArray(hexes[2], [238, 184, 52]) : [238, 184, 52];
+    const cCape  = hexes ? hexToRgbArray(hexes[3], fac.cape)       : fac.cape;
+    const cGlow  = hexes ? hexToRgbArray(hexes[4], tData.emissive) : tData.emissive;
+
+    // Hair / Beard natural Saxon & Norse tones (golden blonde, auburn red, chestnut brown, ash)
+    const hairSeeds = [
+      [218, 168, 72],  // Saxon Golden Blonde
+      [172, 74, 34],   // Dane Copper Red
+      [105, 68, 42],   // Northumbrian Chestnut
+      [195, 198, 208], // Silver-Braided Elder Earl
+      [58, 44, 34]     // Dark Raven-Brown
+    ];
+    const hTone = hairSeeds[((unit.dexNum || 1) + (unit.tier || 0)) % hairSeeds.length];
+
+    fillRamp(1,   15, 34, 38, 46, 1, 0);                        // Plinth dark slate
+    fillRamp(16,  16, 76, 70, 64, 2, 0);                        // Stone & earth
+    fillRamp(32,  16, cPrim[0], cPrim[1], cPrim[2], 6, 0);      // Zone 1: Mail Hauberk & Steel
+    fillRamp(48,  16, cSec[0], cSec[1], cSec[2], 7, 0);         // Zone 2: Shield & Pauldron Trim
+    fillRamp(64,  16, 28, 32, 40, 5, 0);                        // Visor shadow & dark iron
+    fillRamp(80,  16, 215, 172, 142, 7, 0);                     // Warm face skin tone
+    fillRamp(96,  16, cHeart[0], cHeart[1], cHeart[2], 8, 0);   // Zone 3: Gold Gilding & Braid Cuffs
+    fillRamp(112, 16, 114, 72, 42, 6, 0);                       // Ash-wood shafts & leather
+    fillRamp(128, 16, cGlow[0], cGlow[1], cGlow[2], 10, 1);     // Zone 5: Runic Weapon Glow
+    fillRamp(144, 16, cCape[0], cCape[1], cCape[2], 4, 0);      // Zone 4: Cloak & Tunic Cloth
+    fillRamp(160, 16, 255, 105, 25, 10, 1);                     // Hearth & Longship Embers
+    fillRamp(176, 16, 165, 175, 188, 3, 0);                     // Sea Mist & Bone
+    fillRamp(192, 16, hTone[0], hTone[1], hTone[2], 9, 0);      // Beards & Hair Braids
+  }
+
+  setRawVoxel(x, y, z, colIdx) {
+    if (x < 3 || x >= 125 || y < 2 || y >= 125 || z < 3 || z >= 125 || colIdx <= 0) return;
+    const idx = (y << 14) | (z << 7) | x;
+    const stamp = this.stampGrid[idx];
+    if (stamp !== this.currentStamp) {
+      this.stampGrid[idx] = this.currentStamp;
+      this.grid[idx] = colIdx;
+      if (this.occupiedCount < 259990) {
+        this.occupiedList[this.occupiedCount++] = idx;
+      }
+    } else {
+      const oldCol = this.grid[idx];
+      if (this.materialPriority[colIdx] >= this.materialPriority[oldCol]) {
+        this.grid[idx] = colIdx;
+      }
+    }
+  }
+
+  setVoxel(x, y, z, colIdx) {
+    if (this.tScale === 1.0 && this.txOrigin === 64 && this.tyOrigin === 15 && this.tzOrigin === 64) {
+      this.setRawVoxel(x | 0, y | 0, z | 0, colIdx);
+      return;
+    }
+    const [mx, my, mz] = this.mapCoord(x, y, z);
+    this.setRawVoxel(mx, my, mz, colIdx);
+  }
+
+  getVoxel(x, y, z) {
+    if (x < 0 || x >= 128 || y < 0 || y >= 128 || z < 0 || z >= 128) return 0;
+    const idx = (y << 14) | (z << 7) | x;
+    return this.stampGrid[idx] === this.currentStamp ? this.grid[idx] : 0;
+  }
+
+  fillShellBox(x0, y0, z0, x1, y1, z1, baseCol, span = 8) {
+    const [p0x, p0y, p0z] = this.mapCoord(x0, y0, z0);
+    const [p1x, p1y, p1z] = this.mapCoord(x1, y1, z1);
+    const ax0 = Math.max(3, Math.min(p0x, p1x) | 0);
+    const ax1 = Math.min(124, Math.max(p0x, p1x) | 0);
+    const ay0 = Math.max(2, Math.min(p0y, p1y) | 0);
+    const ay1 = Math.min(124, Math.max(p0y, p1y) | 0);
+    const az0 = Math.max(3, Math.min(p0z, p1z) | 0);
+    const az1 = Math.min(124, Math.max(p0z, p1z) | 0);
+
+    for (let y = ay0; y <= ay1; y++) {
+      const yEdge = (y === ay0 || y === ay1);
+      for (let z = az0; z <= az1; z++) {
+        const zEdge = (z === az0 || z === az1);
+        for (let x = ax0; x <= ax1; x++) {
+          if (yEdge || zEdge || x === ax0 || x === ax1) {
+            const c = baseCol + (((x + y + z) * 3) % span);
+            this.setRawVoxel(x, y, z, c);
+          }
+        }
+      }
+    }
+  }
+
+  fillShellCylinder(cx, y0, cz, r, h, baseCol, span = 8) {
+    const [mcx, my0, mcz] = this.mapCoord(cx, y0, cz);
+    const sr = Math.max(1.2, r * this.tScale);
+    const sh = Math.max(1, Math.round(h * this.tScale));
+    const ir = Math.ceil(sr);
+    const r2 = sr * sr;
+    const innerR2 = Math.max(0, (sr - 1.35) * (sr - 1.35));
+    const ay0 = my0 | 0;
+    const ay1 = (my0 + sh) | 0;
+    for (let y = ay0; y <= ay1; y++) {
+      const yCap = (y === ay0 || y === ay1);
+      for (let dz = -ir; dz <= ir; dz++) {
+        for (let dx = -ir; dx <= ir; dx++) {
+          const d2 = dx * dx + dz * dz;
+          if (d2 <= r2 && (yCap || d2 >= innerR2)) {
+            const c = baseCol + ((Math.abs(dx + dz + y)) % span);
+            this.setRawVoxel((mcx + dx) | 0, y, (mcz + dz) | 0, c);
+          }
+        }
+      }
+    }
+  }
+
+  fillEllipsoid(cx, cy, cz, rx, ry, rz, baseCol, span = 8) {
+    const [mcx, mcy, mcz] = this.mapCoord(cx, cy, cz);
+    const srx = Math.max(1.1, rx * this.tScale);
+    const sry = Math.max(1.1, ry * this.tScale);
+    const srz = Math.max(1.1, rz * this.tScale);
+    const irx = Math.ceil(srx), iry = Math.ceil(sry), irz = Math.ceil(srz);
+    for (let dy = -iry; dy <= iry; dy++) {
+      for (let dz = -irz; dz <= irz; dz++) {
+        for (let dx = -irx; dx <= irx; dx++) {
+          const d = (dx * dx) / (srx * srx) + (dy * dy) / (sry * sry) + (dz * dz) / (srz * srz);
+          if (d <= 1.0 && d >= 0.52) {
+            const c = baseCol + (Math.abs(dx + dy + dz) % span);
+            this.setRawVoxel((mcx + dx) | 0, (mcy + dy) | 0, (mcz + dz) | 0, c);
+          }
+        }
+      }
+    }
+  }
+
+  drawTaperedLimb(x1, y1, z1, x2, y2, z2, r1, r2, colIdx) {
+    const [mx1, my1, mz1] = this.mapCoord(x1, y1, z1);
+    const [mx2, my2, mz2] = this.mapCoord(x2, y2, z2);
+    const sr1 = Math.max(0.8, r1 * this.tScale);
+    const sr2 = Math.max(0.8, r2 * this.tScale);
+    const dx = mx2 - mx1, dy = my2 - my1, dz = mz2 - mz1;
+    const steps = Math.max(1, Math.ceil(Math.sqrt(dx * dx + dy * dy + dz * dz) * 1.4));
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const cx = (mx1 + dx * t) | 0;
+      const cy = (my1 + dy * t) | 0;
+      const cz = (mz1 + dz * t) | 0;
+      const r = sr1 + (sr2 - sr1) * t;
+      const ir = Math.max(0, Math.floor(r));
+      const rSq = r * r + 0.35;
+      for (let oy = -ir; oy <= ir; oy++) {
+        for (let oz = -ir; oz <= ir; oz++) {
+          for (let ox = -ir; ox <= ir; ox++) {
+            if (ox * ox + oy * oy + oz * oz <= rSq) {
+              this.setRawVoxel(cx + ox, cy + oy, cz + oz, colIdx);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  drawRod(x1, y1, z1, x2, y2, z2, r, colIdx) {
+    this.drawTaperedLimb(x1, y1, z1, x2, y2, z2, r, r, colIdx);
+  }
+
+  drawRoundShield(cx, cy, cz, radius, normalAxis = 'z') {
+    const [mcx, mcy, mcz] = this.mapCoord(cx, cy, cz);
+    const sr = Math.max(3.5, radius * this.tScale);
+    const ir = Math.ceil(sr);
+    const r2 = sr * sr;
+    const rim2 = Math.max(1, (sr - 1.6) * (sr - 1.6));
+    const boss2 = Math.max(1.2, (2.6 * this.tScale) * (2.6 * this.tScale));
+
+    for (let a = -ir; a <= ir; a++) {
+      for (let b = -ir; b <= ir; b++) {
+        const d2 = a * a + b * b;
+        if (d2 > r2) continue;
+        let col = 48 + (Math.abs(a + b) % 10);
+        if (d2 >= rim2) {
+          col = 98 + (Math.abs(a) % 8);
+        } else if ((a > 0 && b > 0) || (a < 0 && b < 0)) {
+          col = 144 + (Math.abs(a - b) % 10);
+        }
+        if (normalAxis === 'z') {
+          this.setRawVoxel(mcx + a, mcy + b, mcz, col);
+          this.setRawVoxel(mcx + a, mcy + b, mcz + 1, col);
+          if (d2 <= boss2) {
+            this.setRawVoxel(mcx + a, mcy + b, mcz + 2, 98);
+            this.setRawVoxel(mcx + a, mcy + b, mcz + 3, 132);
+          }
+        } else {
+          this.setRawVoxel(mcx + a, mcy + b, mcz, col);
+          this.setRawVoxel(mcx + a, mcy + b, mcz - 1, col);
+          if (d2 <= boss2) {
+            this.setRawVoxel(mcx + a, mcy + b, mcz - 2, 98);
+            this.setRawVoxel(mcx + a, mcy + b, mcz - 3, 132);
+          }
+        }
+      }
+    }
+  }
+
+  /* ==========================================================================
+     SMALLER, PROPORTIONATE BEARDS & BRAIDS SCULPTING (8 DISTINCT STYLES)
+     ========================================================================== */
+  sculptBeardAndBraids(tx, hy0, tz, beardStyle) {
+    // Face chin & lower jaw base (visible below spectacle/nasal guard)
+    this.fillShellBox(tx - 5, hy0 + 1, tz + 6, tx + 5, hy0 + 6, tz + 9, 82, 8);
+
+    const style = beardStyle || 'trim_fork';
+
+    if (style === 'trim_fork') {
+      // Neat mustache + compact forked chin beard (does not cover chest brooch)
+      this.fillShellBox(tx - 5, hy0 + 3, tz + 9, tx + 5, hy0 + 4, tz + 11, 194, 8);
+      this.drawTaperedLimb(tx - 3, hy0 + 2, tz + 9, tx - 4, hy0 - 3, tz + 11, 2.0, 1.0, 195);
+      this.drawTaperedLimb(tx + 3, hy0 + 2, tz + 9, tx + 4, hy0 - 3, tz + 11, 2.0, 1.0, 195);
+      // Gold beard-ring cuffs
+      this.setVoxel(tx - 4, hy0 - 2, tz + 11, 98);
+      this.setVoxel(tx + 4, hy0 - 2, tz + 11, 98);
+    } else if (style === 'twin_braids') {
+      // Short cropped chin beard + twin beaded cheek braids
+      this.fillShellBox(tx - 4, hy0 + 1, tz + 9, tx + 4, hy0 + 4, tz + 11, 194, 8);
+      this.drawTaperedLimb(tx - 6, hy0 + 3, tz + 8, tx - 7, hy0 - 5, tz + 10, 1.5, 1.0, 196);
+      this.drawTaperedLimb(tx + 6, hy0 + 3, tz + 8, tx + 7, hy0 - 5, tz + 10, 1.5, 1.0, 196);
+      this.setVoxel(tx - 7, hy0 - 3, tz + 10, 98);
+      this.setVoxel(tx + 7, hy0 - 3, tz + 10, 98);
+      this.setVoxel(tx - 7, hy0 - 5, tz + 10, 98);
+      this.setVoxel(tx + 7, hy0 - 5, tz + 10, 98);
+    } else if (style === 'saxon_stache') {
+      // Classic Anglo-Saxon noble drooping mustache & neat chin
+      this.fillShellBox(tx - 6, hy0 + 3, tz + 9, tx + 6, hy0 + 5, tz + 11, 194, 8);
+      this.drawTaperedLimb(tx - 5, hy0 + 4, tz + 10, tx - 6, hy0 - 1, tz + 10, 1.4, 0.9, 196);
+      this.drawTaperedLimb(tx + 5, hy0 + 4, tz + 10, tx + 6, hy0 - 1, tz + 10, 1.4, 0.9, 196);
+    } else if (style === 'royal_plait') {
+      // Single braided chin plait + side temple braids
+      this.fillShellBox(tx - 4, hy0 + 2, tz + 9, tx + 4, hy0 + 4, tz + 11, 194, 8);
+      this.drawTaperedLimb(tx, hy0 + 2, tz + 10, tx, hy0 - 5, tz + 11, 1.8, 1.0, 196);
+      this.setVoxel(tx, hy0 - 3, tz + 11, 98);
+      this.setVoxel(tx, hy0 - 5, tz + 11, 98);
+      // Side temple braids
+      this.drawTaperedLimb(tx - 9, hy0 + 5, tz + 4, tx - 11, hy0 - 4, tz + 6, 1.4, 0.9, 195);
+      this.drawTaperedLimb(tx + 9, hy0 + 5, tz + 4, tx + 11, hy0 - 4, tz + 6, 1.4, 0.9, 195);
+    } else if (style === 'valkyrie_braids') {
+      // Clean-shaven / Shieldmaiden face + long braided war-locks over both shoulders
+      this.drawTaperedLimb(tx - 8, hy0 + 6, tz + 3, tx - 11, hy0 - 8, tz + 8, 1.7, 1.1, 196);
+      this.drawTaperedLimb(tx + 8, hy0 + 6, tz + 3, tx + 11, hy0 - 8, tz + 8, 1.7, 1.1, 196);
+      this.setVoxel(tx - 10, hy0 - 4, tz + 7, 98);
+      this.setVoxel(tx + 10, hy0 - 4, tz + 7, 98);
+      this.setVoxel(tx - 11, hy0 - 7, tz + 8, 98);
+      this.setVoxel(tx + 11, hy0 - 7, tz + 8, 98);
+    } else if (style === 'stubble_locks') {
+      // Close-cropped jaw beard + back/side dread-braids
+      this.fillShellBox(tx - 5, hy0 + 1, tz + 8, tx + 5, hy0 + 4, tz + 10, 193, 6);
+      this.drawTaperedLimb(tx - 8, hy0 + 4, tz + 1, tx - 10, hy0 - 5, tz + 3, 1.5, 1.0, 194);
+      this.drawTaperedLimb(tx + 8, hy0 + 4, tz + 1, tx + 10, hy0 - 5, tz + 3, 1.5, 1.0, 194);
+    } else if (style === 'earl_trim') {
+      // Short pointed Earl goatee + braided mustache tips
+      this.fillShellBox(tx - 5, hy0 + 3, tz + 9, tx + 5, hy0 + 4, tz + 11, 195, 6);
+      this.drawTaperedLimb(tx, hy0 + 2, tz + 10, tx, hy0 - 2, tz + 11, 1.8, 0.8, 196);
+      this.setVoxel(tx, hy0 - 2, tz + 11, 98);
+    } else if (style === 'clean_war') {
+      // Clean-shaven jaw with neat braided sidelocks
+      this.drawTaperedLimb(tx - 8, hy0 + 5, tz + 5, tx - 9, hy0 - 3, tz + 7, 1.3, 0.9, 195);
+      this.drawTaperedLimb(tx + 8, hy0 + 5, tz + 5, tx + 9, hy0 - 3, tz + 7, 1.3, 0.9, 195);
+      this.setVoxel(tx - 9, hy0 - 2, tz + 7, 98);
+      this.setVoxel(tx + 9, hy0 - 2, tz + 7, 98);
+    }
+  }
+
+  buildHeroicPlinth(plinthType, poseType, squadSize = 1) {
+    this.resetTransform();
+    const baseRad = squadSize === 5 ? 54 : (squadSize === 3 ? 48 : 37);
+    this.fillShellCylinder(64, 4, 64, baseRad, 4, 1, 10);
+    this.fillShellCylinder(64, 8, 64, baseRad - 3, 4, 16, 12);
+    this.fillShellCylinder(64, 12, 64, baseRad - 6, 3, 18, 12);
+    // Gold nameplate on front rim
+    this.fillShellBox(50, 5, Math.min(122, 64 + baseRad - 4), 78, 9, Math.min(124, 64 + baseRad), 98, 8);
+
+    if (squadSize === 1) {
+      if (plinthType === 'spire' || poseType === 'spire') {
+        this.fillShellCylinder(64, 15, 62, 18, 5, 16, 10);
+        this.fillShellCylinder(64, 20, 62, 14, 6, 1, 10);
+        this.fillShellBox(52, 26, 52, 76, 30, 74, 18, 10);
+      }
+      if (plinthType === 'boulder' || poseType === 'rock_perch') {
+        this.fillShellBox(38, 15, 56, 62, 25, 82, 18, 12);
+        this.fillShellBox(42, 25, 60, 58, 28, 78, 20, 10);
+      }
+    }
+    if (plinthType === 'lava') {
+      this.fillShellBox(40, 14, 42, 88, 16, 86, 162, 10);
+    } else if (plinthType === 'anvil' && squadSize === 1) {
+      this.fillShellBox(76, 15, 68, 92, 25, 80, 82, 10);
+      this.fillShellBox(72, 25, 66, 96, 30, 82, 98, 10);
+    } else if (plinthType === 'ruins') {
+      this.fillShellBox(36, 15, 42, 54, 19, 58, 20, 10);
+      this.fillShellBox(74, 15, 42, 92, 19, 58, 20, 10);
+    }
+  }
+
+  sculptSingleWarrior(poseType, armorType, helmType, weapType, backType, beardStyle, isFlanker = false) {
+    let by = 15;
+    let lFoot = { x: 54, y: 15, z: 64 };
+    let rFoot = { x: 74, y: 15, z: 62 };
+    let pelvis = { x: 64, y: 49, z: 63 };
+    let shoulder = { x: 64, y: 73, z: 63 };
+    let rHand = { x: 89, y: 60, z: 75 };
+    let lHand = { x: 39, y: 60, z: 74 };
+
+    const effPose = isFlanker ? 'heroic' : poseType;
+
+    if (effPose === 'rock_perch') {
+      lFoot = { x: 50, y: 28, z: 69 };
+      rFoot = { x: 76, y: 15, z: 57 };
+      pelvis = { x: 64, y: 51, z: 64 };
+      shoulder = { x: 63, y: 75, z: 66 };
+      rHand = { x: 88, y: 66, z: 78 };
+      lHand = { x: 42, y: 64, z: 78 };
+    } else if (effPose === 'hover') {
+      by = 29;
+      lFoot = { x: 55, y: 31, z: 60 };
+      rFoot = { x: 73, y: 27, z: 58 };
+      pelvis = { x: 64, y: 61, z: 62 };
+      shoulder = { x: 64, y: 84, z: 64 };
+      rHand = { x: 90, y: 74, z: 76 };
+      lHand = { x: 38, y: 74, z: 76 };
+      this.drawRod(57, 15, 52, 57, 62, 50, 3.2, 176);
+      this.drawRod(71, 15, 52, 71, 62, 50, 3.2, 176);
+    } else if (effPose === 'leap') {
+      by = 25;
+      lFoot = { x: 51, y: 32, z: 70 };
+      rFoot = { x: 77, y: 22, z: 52 };
+      pelvis = { x: 64, y: 56, z: 62 };
+      shoulder = { x: 64, y: 79, z: 66 };
+      rHand = { x: 91, y: 82, z: 76 };
+      lHand = { x: 40, y: 66, z: 74 };
+      this.drawRod(58, 15, 48, 58, 54, 50, 3.2, 18);
+      this.drawRod(70, 15, 48, 70, 54, 50, 3.2, 18);
+    } else if (effPose === 'kneel') {
+      lFoot = { x: 53, y: 15, z: 71 };
+      rFoot = { x: 74, y: 15, z: 52 };
+      pelvis = { x: 64, y: 39, z: 62 };
+      shoulder = { x: 64, y: 62, z: 65 };
+      rHand = { x: 84, y: 56, z: 78 };
+      lHand = { x: 52, y: 55, z: 79 };
+    } else if (effPose === 'iaijutsu') {
+      lFoot = { x: 46, y: 15, z: 68 };
+      rFoot = { x: 82, y: 15, z: 57 };
+      pelvis = { x: 64, y: 43, z: 63 };
+      shoulder = { x: 64, y: 66, z: 65 };
+      rHand = { x: 86, y: 52, z: 76 };
+      lHand = { x: 44, y: 50, z: 72 };
+    } else if (effPose === 'spire') {
+      by = 30;
+      lFoot = { x: 56, y: 30, z: 64 };
+      rFoot = { x: 72, y: 30, z: 61 };
+      pelvis = { x: 64, y: 61, z: 63 };
+      shoulder = { x: 64, y: 84, z: 63 };
+      rHand = { x: 89, y: 72, z: 75 };
+      lHand = { x: 39, y: 72, z: 74 };
+    } else if (effPose === 'strafe') {
+      by = 25;
+      lFoot = { x: 49, y: 27, z: 58 };
+      rFoot = { x: 69, y: 23, z: 54 };
+      pelvis = { x: 62, y: 56, z: 60 };
+      shoulder = { x: 67, y: 79, z: 65 };
+      rHand = { x: 92, y: 70, z: 78 };
+      lHand = { x: 42, y: 72, z: 78 };
+      this.drawRod(56, 15, 48, 56, 54, 48, 3.2, 18);
+      this.drawRod(68, 15, 48, 68, 54, 48, 3.2, 18);
+    }
+
+    const lKnee = {
+      x: Math.round((lFoot.x + pelvis.x - 8) * 0.5),
+      y: Math.round((lFoot.y + pelvis.y) * 0.5),
+      z: Math.round((lFoot.z + pelvis.z) * 0.5 + 4)
+    };
+    const rKnee = {
+      x: Math.round((rFoot.x + pelvis.x + 8) * 0.5),
+      y: Math.round((rFoot.y + pelvis.y) * 0.5 - (effPose === 'kneel' ? 6 : 0)),
+      z: Math.round((rFoot.z + pelvis.z) * 0.5 + 3)
+    };
+
+    // Anatomically Tapered Limbs & Turnshoes
+    this.fillShellBox(lFoot.x - 5, lFoot.y, lFoot.z - 4, lFoot.x + 5, lFoot.y + 5, lFoot.z + 7, 112, 10);
+    this.fillShellBox(rFoot.x - 5, rFoot.y, rFoot.z - 4, rFoot.x + 5, rFoot.y + 5, rFoot.z + 7, 112, 10);
+    this.drawTaperedLimb(lFoot.x, lFoot.y + 4, lFoot.z, lKnee.x, lKnee.y, lKnee.z, 3.8, 4.6, 32);
+    this.drawTaperedLimb(rFoot.x, rFoot.y + 4, rFoot.z, rKnee.x, rKnee.y, rKnee.z, 3.8, 4.6, 32);
+    this.drawTaperedLimb(lKnee.x, lKnee.y, lKnee.z, pelvis.x - 8, pelvis.y, pelvis.z, 4.5, 5.2, 144);
+    this.drawTaperedLimb(rKnee.x, rKnee.y, rKnee.z, pelvis.x + 8, pelvis.y, pelvis.z, 4.5, 5.2, 144);
+    this.fillShellBox(lKnee.x - 4, lKnee.y - 2, lKnee.z, lKnee.x + 4, lKnee.y + 3, lKnee.z + 5, 98, 10);
+    this.fillShellBox(rKnee.x - 4, rKnee.y - 2, rKnee.z, rKnee.x + 4, rKnee.y + 3, rKnee.z + 5, 98, 10);
+
+    // Mail Hauberk Skirt & Belt
+    const py = pelvis.y, pz = pelvis.z;
+    this.fillShellBox(pelvis.x - 13, py, pz - 6, pelvis.x + 13, py + 7, pz + 6, 32, 10);
+    this.fillShellBox(pelvis.x - 6, py - 4, pz + 5, pelvis.x + 6, py + 6, pz + 9, 48, 12);
+
+    const beltY = py + 6;
+    this.fillShellBox(pelvis.x - 14, beltY, pz - 7, pelvis.x + 14, beltY + 4, pz + 8, 112, 12);
+    this.fillShellBox(pelvis.x - 4, beltY, pz + 8, pelvis.x + 4, beltY + 4, pz + 10, 98, 10);
+
+    // Torso Hauberk & Royal Saxon Brooch
+    const ty0 = beltY + 4, ty1 = shoulder.y, tx = shoulder.x, tz = shoulder.z;
+    this.fillShellBox(tx - 14, ty0, tz - 7, tx + 14, ty1, tz + 7, 32, 12);
+    this.fillShellBox(tx - 13, ty0 + 8, tz + 6, tx - 3, ty1 - 2, tz + 10, 48, 12);
+    this.fillShellBox(tx + 3, ty0 + 8, tz + 6, tx + 13, ty1 - 2, tz + 10, 48, 12);
+    this.fillShellBox(tx - 3, ty0 + 11, tz + 7, tx + 3, ty0 + 16, tz + 11, 98, 10);
+    this.setVoxel(tx, ty0 + 14, tz + 12, 134);
+
+    if (armorType === 'fur') {
+      this.fillEllipsoid(tx, ty1 - 1, tz, 18, 5, 11, 112, 12);
+    }
+
+    // Back Rigs
+    if (backType === 'cape' || backType === 'both') {
+      const stepY = this.tScale < 0.75 ? 2 : 1;
+      for (let cy = by + 6; cy <= ty1 - 1; cy += stepY) {
+        const t = (ty1 - cy) / Math.max(1, ty1 - by);
+        const flare = Math.round(t * 9);
+        for (let cx = tx - 14 - flare; cx <= tx + 14 + flare; cx += stepY) {
+          const cz = tz - 9 - Math.round(t * 7);
+          const isTrim = (cy <= by + 8) || (cx <= tx - 13 - flare) || (cx >= tx + 13 + flare);
+          const col = isTrim ? 98 : 146;
+          this.setVoxel(cx, cy, cz, col);
+        }
+      }
+    }
+    if (backType === 'jetpack' || backType === 'both') {
+      this.drawRoundShield(tx, ty0 + 10, tz - 10, 12, 'back');
+    }
+    if (backType === 'sashimono') {
+      this.drawRod(tx, ty0 + 4, tz - 9, tx, Math.min(120, ty1 + 34), tz - 9, 1.4, 98);
+      this.fillShellBox(tx - 9, ty1 + 10, tz - 10, tx + 9, Math.min(118, ty1 + 32), tz - 8, 144, 12);
+    }
+
+    // Pauldrons & Tapered Arms
+    const pSize = armorType === 'skirmish' ? 5 : 7;
+    this.fillEllipsoid(tx - 18, ty1 - 4, tz, pSize, 5, 7, 48, 12);
+    this.fillEllipsoid(tx + 18, ty1 - 4, tz, pSize, 5, 7, 48, 12);
+    this.drawTaperedLimb(tx - 17, ty1 - 4, tz, lHand.x, lHand.y, lHand.z, 4.2, 3.4, 32);
+    this.drawTaperedLimb(tx + 17, ty1 - 4, tz, rHand.x, rHand.y, rHand.z, 4.2, 3.4, 32);
+    this.fillShellBox(lHand.x - 4, lHand.y - 3, lHand.z - 4, lHand.x + 4, lHand.y + 4, lHand.z + 4, 98, 10);
+    this.fillShellBox(rHand.x - 4, rHand.y - 3, rHand.z - 4, rHand.x + 4, rHand.y + 4, rHand.z + 4, 98, 10);
+
+    // Helmet & Proportionate Beard / Braids
+    const hy0 = ty1 + 1;
+    this.fillShellCylinder(tx, ty1 - 1, tz, 6.0, 5, 32, 8);
+    this.fillShellCylinder(tx, hy0 + 2, tz, 9.8, 9, 32, 12);
+    this.fillEllipsoid(tx, hy0 + 11, tz, 10.2, 7.5, 10.5, 34, 12);
+
+    // Sculpt the proportionate beard & braids before nasal bar & helm trim
+    this.sculptBeardAndBraids(tx, hy0, tz, beardStyle);
+
+    // Brow Band, Cheekguards & Spectacle/Nasal Guard
+    this.fillShellBox(tx - 9, hy0 + 10, tz + 8, tx + 9, hy0 + 12, tz + 11, 98, 10);
+    this.fillShellBox(tx - 10, hy0 + 3, tz + 5, tx - 5, hy0 + 8, tz + 10, 48, 10);
+    this.fillShellBox(tx + 5, hy0 + 3, tz + 5, tx + 10, hy0 + 8, tz + 10, 48, 10);
+    for (let vy = hy0 + 4; vy <= hy0 + 10; vy++) {
+      this.fillShellBox(tx - 1, vy, tz + 10, tx + 1, vy, tz + 11, 98, 4);
+    }
+
+    if (helmType === 'kabuto') {
+      this.drawRod(tx - 9, hy0 + 12, tz + 6, tx - 18, hy0 + 23, tz + 9, 1.8, 98);
+      this.drawRod(tx + 9, hy0 + 12, tz + 6, tx + 18, hy0 + 23, tz + 9, 1.8, 98);
+    } else if (helmType === 'oni') {
+      this.fillShellBox(tx - 3, hy0 + 15, tz - 5, tx + 3, hy0 + 21, tz + 7, 98, 8);
+    } else if (helmType === 'horns') {
+      this.drawRod(tx - 8, hy0 + 13, tz + 4, tx - 16, hy0 + 23, tz + 8, 2.0, 98);
+      this.drawRod(tx + 8, hy0 + 13, tz + 4, tx + 16, hy0 + 23, tz + 8, 2.0, 98);
+    } else if (helmType === 'crest') {
+      this.fillShellCylinder(tx, hy0 + 14, tz, 9.0, 5, 98, 8);
+      this.fillShellBox(tx - 2, hy0 + 15, tz - 9, tx + 2, hy0 + 22, tz + 9, 98, 10);
+    } else if (helmType === 'spikes') {
+      this.drawRod(tx, hy0 + 15, tz, tx, hy0 + 24, tz, 2.0, 98);
+    }
+
+    // Weapons & Shields
+    const wxR = rHand.x, wyR = rHand.y, wzR = rHand.z;
+    const wxL = lHand.x, wyL = lHand.y, wzL = lHand.z;
+
+    if (weapType === 'darksaber' || weapType === 'katana') {
+      this.drawRod(wxR - 4, wyR + 4, wzR + 2, wxR + 4, wyR + 4, wzR + 2, 1.7, 98);
+      this.drawRod(wxR, wyR + 5, wzR + 3, wxR - 3, Math.min(121, wyR + 38), wzR + 18, 2.0, 36);
+      this.drawRod(wxR, wyR + 6, wzR + 4, wxR - 3, Math.min(120, wyR + 37), wzR + 18, 1.0, 134);
+      this.drawRoundShield(wxL - 3, wyL + 2, wzL + 4, 12, 'z');
+    } else if (weapType === 'naginata' || weapType === 'rotary') {
+      this.drawRod(wxR + 2, by + 2, wzR - 8, wxR - 2, Math.min(118, wyR + 34), wzR + 12, 1.8, 112);
+      const axX = wxR - 2, axY = Math.min(115, wyR + 32), axZ = wzR + 12;
+      this.fillShellBox(axX - 2, axY - 9, axZ, axX + 2, axY + 6, axZ + 12, 36, 10);
+      this.fillShellBox(axX - 1, axY - 9, axZ + 10, axX + 1, axY + 6, axZ + 14, 132, 6);
+      if (isFlanker) this.drawRoundShield(wxL - 3, wyL + 2, wzL + 4, 11, 'z');
+    } else if (weapType === 'amban' || weapType === 'eweb') {
+      this.drawRod(wxL, wyL - 20, wzL + 6, wxL, wyL + 22, wzL + 6, 1.6, 112);
+      this.drawRod(wxR, wyR, wzR - 2, wxL, wyL + 2, wzL + 20, 1.1, 98);
+    } else if (weapType === 'spear') {
+      this.drawRod(wxR + 2, by + 2, wzR - 8, wxR - 1, Math.min(121, wyR + 40), wzR + 14, 1.6, 112);
+      this.drawRod(wxR - 1, Math.min(114, wyR + 32), wzR + 12, wxR - 1, Math.min(122, wyR + 42), wzR + 15, 2.1, 132);
+      this.drawRoundShield(wxL - 3, wyL + 2, wzL + 4, 12.5, 'z');
+    } else if (weapType === 'hammer') {
+      this.drawRod(wxR, wyR - 6, wzR, wxR, wyR + 22, wzR + 8, 1.8, 112);
+      this.fillShellBox(wxR - 6, wyR + 18, wzR + 4, wxR + 6, wyR + 26, wzR + 14, 98, 10);
+      this.drawRoundShield(wxL - 3, wyL + 2, wzL + 4, 11.5, 'z');
+    } else {
+      // Dual axes / seaxes / torch
+      this.drawRod(wxL, wyL, wzL, wxL, wyL + 20, wzL + 12, 1.7, 36);
+      this.drawRod(wxR, wyR, wzR, wxR, wyR + 20, wzR + 12, 1.7, 132);
+    }
+  }
+
+  buildUnitModel(unit) {
+    this.clearGrid();
+    this.setupPalette(unit);
+
+    const arch = ARCHETYPES[unit.division || 0] || ARCHETYPES[0];
+    const parts = unit.customParts || {};
+    const poseType   = parts.pose   || arch.pose   || 'heroic';
+    const armorType  = parts.armor  || arch.armor  || 'standard';
+    const helmType   = parts.helm   || arch.helm   || 'tvisor';
+    const weapType   = parts.weapon || arch.weapon || 'darksaber';
+    const backType   = parts.back   || arch.back   || 'both';
+    const plinthType = parts.plinth || arch.plinth || 'boulder';
+    const beardStyle = parts.beard  || unit.beardStyle || BEARD_STYLES[(unit.dexNum || 1) % BEARD_STYLES.length].id;
+    const squadSize  = Number(parts.squadSize || unit.squadSize || 1);
+
+    this.buildHeroicPlinth(plinthType, poseType, squadSize);
+
+    if (squadSize === 1) {
+      this.setTransform(64, 15, 64, 1.0);
+      this.sculptSingleWarrior(poseType, armorType, helmType, weapType, backType, beardStyle, false);
+    } else if (squadSize === 3) {
+      // 3-MAN SHIELDWALL TRIO FORMATION (Leader Center-Front + 2 Interlocking Flankers)
+      const trio = [
+        { ox: 64, oy: 15, oz: 76, s: 0.64, flank: false, weap: weapType, helm: helmType },
+        { ox: 37, oy: 15, oz: 55, s: 0.60, flank: true,  weap: 'spear',  helm: 'owl' },
+        { ox: 91, oy: 15, oz: 55, s: 0.60, flank: true,  weap: 'naginata',helm: 'kabuto' }
+      ];
+      for (let i = 0; i < trio.length; i++) {
+        const m = trio[i];
+        const bStyle = i === 0 ? beardStyle : BEARD_STYLES[(i * 3 + (unit.dexNum || 1)) % BEARD_STYLES.length].id;
+        this.setTransform(m.ox, m.oy, m.oz, m.s);
+        this.sculptSingleWarrior(poseType, armorType, m.helm, m.weap, backType, bStyle, m.flank);
+      }
+    } else {
+      // 5-MAN WARBAND RANK FORMATION (3 Front Shieldwall + 2 Rear Dane-Axe/Banner Support)
+      const warband = [
+        { ox: 64, oy: 15, oz: 82, s: 0.54, flank: false, weap: weapType,   helm: helmType, back: backType },
+        { ox: 36, oy: 15, oz: 74, s: 0.51, flank: true,  weap: 'spear',    helm: 'owl',    back: 'jetpack' },
+        { ox: 92, oy: 15, oz: 74, s: 0.51, flank: true,  weap: 'spear',    helm: 'heavy',  back: 'jetpack' },
+        { ox: 48, oy: 18, oz: 46, s: 0.52, flank: true,  weap: 'naginata', helm: 'kabuto', back: 'sashimono' },
+        { ox: 80, oy: 18, oz: 46, s: 0.52, flank: true,  weap: 'rotary',   helm: 'horns',  back: 'cape' }
+      ];
+      for (let i = 0; i < warband.length; i++) {
+        const m = warband[i];
+        const bStyle = i === 0 ? beardStyle : BEARD_STYLES[(i * 2 + (unit.dexNum || 1)) % BEARD_STYLES.length].id;
+        this.setTransform(m.ox, m.oy, m.oz, m.s);
+        this.sculptSingleWarrior(poseType, armorType, m.helm, m.weap, m.back, bStyle, m.flank);
+      }
+    }
+    this.resetTransform();
+  }
+
+  /* ==========================================================================
+     SURFACE EXTRACTION & ISOLATED SNAPSHOT BAKING
+     ========================================================================== */
+  extractSurfaceVoxels() {
+    this.surfCount = 0;
+    const count = this.occupiedCount;
+    for (let i = 0; i < count; i++) {
+      if (this.surfCount >= this.MAX_SURF - 1) break;
+      const idx = this.occupiedList[i];
+      if (this.stampGrid[idx] !== this.currentStamp) continue;
+      const colIdx = this.grid[idx];
+      if (!colIdx) continue;
+
+      const x = idx & 127;
+      const z = (idx >> 7) & 127;
+      const y = (idx >> 14) & 127;
+
+      const nUp = this.getVoxel(x, y + 1, z);
+      const nDn = this.getVoxel(x, y - 1, z);
+      const nLt = this.getVoxel(x - 1, y, z);
+      const nRt = this.getVoxel(x + 1, y, z);
+      const nFr = this.getVoxel(x, y, z + 1);
+      const nBk = this.getVoxel(x, y, z - 1);
+
+      if (nUp && nDn && nLt && nRt && nFr && nBk) continue;
+
+      const basePacked = this.paletteRGB[colIdx];
+      const r = basePacked & 255;
+      const g = (basePacked >> 8) & 255;
+      const b = (basePacked >> 16) & 255;
+
+      const sIdx = this.surfCount++;
+      this.surfX[sIdx] = x - 64;
+      this.surfY[sIdx] = y - 60;
+      this.surfZ[sIdx] = z - 64;
+
+      if (this.isEmissive[colIdx]) {
+        const em = this.packRGB(Math.min(255, r * 1.25 + 32), Math.min(255, g * 1.25 + 32), Math.min(255, b * 1.25 + 32));
+        this.surfColTop[sIdx] = em;
+        this.surfColLeft[sIdx] = em;
+        this.surfColRight[sIdx] = em;
+      } else {
+        const ao = (nUp ? 0 : 1) + (nLt ? 0 : 1) + (nFr ? 0 : 1);
+        const aoBoost = 0.84 + ao * 0.08;
+        this.surfColTop[sIdx]   = this.packRGB(r * 1.16 * aoBoost, g * 1.16 * aoBoost, b * 1.16 * aoBoost);
+        this.surfColLeft[sIdx]  = this.packRGB(r * 0.90 * aoBoost, g * 0.90 * aoBoost, b * 0.90 * aoBoost);
+        this.surfColRight[sIdx] = this.packRGB(r * 0.70 * aoBoost, g * 0.70 * aoBoost, b * 0.70 * aoBoost);
+      }
+    }
+  }
+
+  createSnapshot(unit) {
+    this.buildUnitModel(unit);
+    this.extractSurfaceVoxels();
+    const n = this.surfCount;
+    return {
+      count: n,
+      x: this.surfX.slice(0, n),
+      y: this.surfY.slice(0, n),
+      z: this.surfZ.slice(0, n),
+      colTop: this.surfColTop.slice(0, n),
+      colLeft: this.surfColLeft.slice(0, n),
+      colRight: this.surfColRight.slice(0, n)
+    };
+  }
+
+  renderSnapshotToCanvas(snapshot, targetCanvas, yaw = 0.55, pitch = 0.30, zoom = 3.25) {
+    if (!snapshot || !targetCanvas) return;
+    const W = 512, H = 512;
+    this.pixels.fill(0);
+    this.zBuf.fill(-999999);
+
+    const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
+    const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+    const splat = Math.max(2, Math.ceil(zoom * 0.92));
+
+    const n = snapshot.count;
+    const sxArr = snapshot.x, syArr = snapshot.y, szArr = snapshot.z;
+    const cTop = snapshot.colTop, cLeft = snapshot.colLeft, cRight = snapshot.colRight;
+
+    for (let i = 0; i < n; i++) {
+      const vx = sxArr[i], vy = syArr[i], vz = szArr[i];
+      const rx = vx * cosY + vz * sinY;
+      const rz = -vx * sinY + vz * cosY;
+      const ry = vy * cosP - rz * sinP;
+      const depth = vy * sinP + rz * cosP;
+
+      const px = (256 + rx * zoom) | 0;
+      const py = (272 - ry * zoom) | 0;
+      if (px < splat || px >= W - splat || py < splat || py >= H - splat) continue;
+
+      const colT = cTop[i], colL = cLeft[i], colR = cRight[i];
+      for (let dy = -splat; dy <= splat; dy++) {
+        const rowOffset = (py + dy) * W;
+        const faceCol = dy < 0 ? colT : (dy === 0 ? colL : colR);
+        for (let dx = -splat; dx <= splat; dx++) {
+          const pIdx = rowOffset + px + dx;
+          if (depth > this.zBuf[pIdx]) {
+            this.zBuf[pIdx] = depth;
+            this.pixels[pIdx] = faceCol;
+          }
+        }
+      }
+    }
+
+    this.ctx.putImageData(this.imgData, 0, 0);
+    const outCtx = targetCanvas.getContext('2d');
+    outCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+    outCtx.drawImage(this.canvas, 0, 0, targetCanvas.width, targetCanvas.height);
+  }
+
+  bakeThumbnail(unit) {
+    const snap = this.createSnapshot(unit);
+    const zZoom = (unit.squadSize === 5) ? 2.65 : ((unit.squadSize === 3) ? 2.85 : 3.25);
+    this.renderSnapshotToCanvas(snap, this.canvas, 0.52, 0.26, zZoom);
+    this.thumbCtx.clearRect(0, 0, 128, 128);
+    this.thumbCtx.drawImage(this.canvas, 0, 0, 128, 128);
+    return this.thumbCanvas.toDataURL('image/png');
+  }
+}
+
+const VoxelEngine = new VoxelWarforgeEngine();
+
+/* ============================================================================
+   3. GAME STATE, UNIT GENERATOR & BASE36 TRADE CODEC
+   ============================================================================ */
+const State = {
+  funds: 500,
+  fuel: 1000,
+  godMode: false,
+  units: [],
+  pilots: [],
+  codex: {},
+  milestonesClaimed: {},
+  tech: { yield: 0, fuel: 0, atk: 0, cap: 0 },
+  auto: { autoMarch: false, autoRepair: false, autoSupply: false },
+  stats: { forged: 0, unboxed: 0, battlesWon: 0, auctionsWon: 0, auctionsSold: 0, patrolsRun: 0 },
+  sectors: SECTORS.map(s => ({ id: s.id, unitId: null, progress: 0 })),
+  buyerAuction: null,
+  sellerLanes: [null, null, null, null, null],
+  commissions: []
+};
+
+function createUnitFromParams({ tier = 0, faction = 0, division = 0, squadSize = 1, customName = '', customParts = null, customHexColors = null, artisanGrade = null }) {
+  const t = Math.max(0, Math.min(14, tier | 0));
+  const f = Math.max(0, Math.min(9, faction | 0));
+  const d = Math.max(0, Math.min(9, division | 0));
+  const sq = (squadSize === 3 || squadSize === 5) ? squadSize : 1;
+  const sqCfg = SQUAD_CONFIGS[sq];
+
+  const tData = TIERS[t];
+  const fData = FACTIONS[f];
+  const aData = ARCHETYPES[d];
+  const dexNum = calcCodexNum(t, f, d, sq);
+  const beardId = (customParts && customParts.beard) ? customParts.beard : BEARD_STYLES[(dexNum + t) % BEARD_STYLES.length].id;
+
+  let mult = sqCfg.valMult;
+  let finishLabel = tData.finish;
+  if (artisanGrade) {
+    mult *= artisanGrade.mult;
+    finishLabel = `${artisanGrade.name} (${artisanGrade.mult.toFixed(2)}x)`;
+  }
+
+  const maxHp = Math.round(tData.hp * sqCfg.hpMult * (artisanGrade ? 1.25 : 1.0));
+  const atk = Math.round(tData.atk * sqCfg.atkMult * (artisanGrade ? 1.25 : 1.0));
+  const val = Math.max(15, Math.round(tData.val * mult));
+
+  const sqPrefix = sq === 5 ? '[5-Man Warband] ' : (sq === 3 ? '[3-Man Trio] ' : '');
+  const name = customName && customName.trim()
+    ? customName.trim()
+    : `${sqPrefix}${fData.name.split(' ')[0]} ${aData.name}`;
+
+  const u = {
+    id: 'U' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6).toUpperCase(),
+    dexNum,
+    tier: t,
+    faction: f,
+    division: d,
+    squadSize: sq,
+    beardStyle: beardId,
+    name,
+    finish: finishLabel,
+    val,
+    maxHp,
+    hp: maxHp,
+    atk,
+    vaulted: false,
+    pilotId: null,
+    sectorId: null,
+    customParts: customParts ? { ...customParts, squadSize: sq, beard: beardId } : null,
+    customHexColors: customHexColors ? [...customHexColors] : null,
+    thumb: ''
+  };
+  u.thumb = VoxelEngine.bakeThumbnail(u);
+  return u;
+}
+
+function encodeUnitTradeCode(u) {
+  if (u.customHexColors || u.customParts) {
+    const t36 = u.tier.toString(36).toUpperCase();
+    const d36 = u.division.toString(36).toUpperCase();
+    const sq = u.squadSize || 1;
+    const hexStr = (u.customHexColors || ['#D6E0EE','#D02430','#EEB830','#7D181C','#FFFFFF'])
+      .map(h => h.replace('#', '').toUpperCase()).join('-');
+    return `WFC-${t36}${d36}S${sq}-${hexStr}`;
+  }
+  return `WF-${u.dexNum.toString(36).toUpperCase().padStart(3, '0')}`;
+}
+
+function createPilot(tier = 0) {
+  const firstNames = ['Aethelstan', 'Uhtred', 'Leofric', 'Godwin', 'Byrhtnoth', 'Ragnar', 'Ivar', 'Guthrum', 'Sigurd', 'Eadric', 'Hakon', 'Aethelflaed', 'Lagertha', 'Harold'];
+  const titles = ['Ealdorman of Wessex', 'Thegn of Mercia', 'Jarl of Jorvik', 'Bamburgh High Drengr', 'Winchester Marshal', 'Jomsborg Sea-Lord', 'Sutton Hoo Warden'];
+  const t = Math.max(0, Math.min(14, tier | 0));
+  const p = {
+    id: 'P' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5).toUpperCase(),
+    name: `${firstNames[Math.floor(Math.random() * firstNames.length)]}, ${titles[Math.floor(Math.random() * titles.length)]}`,
+    tier: t,
+    yieldBonus: 8 + t * 5,
+    speedBonus: 4 + t * 2,
+    fuelBonus: 3 + t * 2,
+    armorBonus: 6 + t * 4,
+    unitId: null
+  };
+  return p;
+}
+
+/* ============================================================================
+   4. CORE GAME CONTROLLER, QOL ACTIONS, AUCTIONS & PATROLS
+   ============================================================================ */
+const Game = {
+  init() {
+    SaveSystem.loadFromLocal();
+    if (State.units.length === 0) {
+      // Starter Anglo-Saxon & Norse Trio + Solo units
+      const s1 = createUnitFromParams({ tier: 0, faction: 0, division: 0, squadSize: 1 });
+      const s2 = createUnitFromParams({ tier: 1, faction: 4, division: 2, squadSize: 3 });
+      this.addUnitToInventory(s1, false);
+      this.addUnitToInventory(s2, false);
+    }
+    if (State.pilots.length === 0) {
+      State.pilots.push(createPilot(1));
+    }
+    if (State.commissions.length === 0) {
+      this.generateCommissions();
+    }
+    if (!State.buyerAuction) {
+      this.spawnBuyerAuctionLot();
+    }
+
+    UI.initFilters();
+    CustomForge.init();
+    UI.refreshAll();
+
+    // 100ms master tick for live Buyer & Seller auctions + Patrol progress
+    setInterval(() => this.tick(0.1), 100);
+    // 5-second thumbnail-stripped auto-save
+    setInterval(() => SaveSystem.saveToLocal(false), 5000);
+  },
+
+  addUnitToInventory(unit, showToast = true) {
+    if (!unit.thumb) unit.thumb = VoxelEngine.bakeThumbnail(unit);
+    State.units.push(unit);
+    State.codex[unit.dexNum] = true;
+    if (showToast) {
+      UI.toast(`🛡️ Acquired #${String(unit.dexNum).padStart(4, '0')} ${unit.name} (◈${fmtNum(unit.val)})!`);
+    }
+  },
+
+  activateGodMode() {
+    State.godMode = !State.godMode;
+    const btn = document.getElementById('hud-god-btn');
+    if (State.godMode) {
+      State.funds += 10000000;
+      State.fuel += 100000;
+      State.tech = { yield: 10, fuel: 10, atk: 10, cap: 10 };
+      btn.textContent = '⚡ GOD: ON';
+      UI.toast('⚡ GOD MODE ENABLED: +◈10,000,000 Credits, +100,000 Supply, Max Tech & 100% ★ MASTERWORK ★ Rolls!');
+    } else {
+      btn.textContent = '⚡ GOD: OFF';
+      UI.toast('⚡ GOD MODE OFF.');
+    }
+    UI.refreshAll();
+  },
+
+  /* QOL SUITE FUNCTIONS */
+  autoEquipCommanders() {
+    const freePilots = State.pilots.filter(p => !p.unitId).sort((a, b) => b.tier - a.tier);
+    const needyUnits = State.units.filter(u => !u.pilotId).sort((a, b) => b.val - a.val);
+    let count = 0;
+    const len = Math.min(freePilots.length, needyUnits.length);
+    for (let i = 0; i < len; i++) {
+      freePilots[i].unitId = needyUnits[i].id;
+      needyUnits[i].pilotId = freePilots[i].id;
+      count++;
+    }
+    UI.toast(count > 0 ? `🎖️ Auto-equipped ${count} Commander(s) to your strongest units!` : '🎖️ All available Commanders are already assigned.');
+    UI.renderRacks();
+    UI.renderPilots();
+  },
+
+  batchSalvageDupes() {
+    const seenDex = new Set();
+    const kept = [];
+    let salvagedCount = 0;
+    let gainedCredits = 0;
+    let gainedSupply = 0;
+
+    // Sort highest value first so we always keep the best copy of each Codex number
+    const sorted = [...State.units].sort((a, b) => b.val - a.val);
+    for (const u of sorted) {
+      const isBusy = u.vaulted || u.sectorId !== null;
+      if (isBusy || !seenDex.has(u.dexNum) || kept.length < 3) {
+        seenDex.add(u.dexNum);
+        kept.push(u);
+      } else {
+        if (u.pilotId) {
+          const p = State.pilots.find(x => x.id === u.pilotId);
+          if (p) p.unitId = null;
+        }
+        salvagedCount++;
+        gainedCredits += Math.max(5, Math.round(u.val * 0.35));
+        gainedSupply += 10 + u.tier * 5;
+      }
+    }
+
+    if (salvagedCount === 0) {
+      UI.toast('♻️ No unvaulted duplicate Codex units found to salvage.');
+      return;
+    }
+    State.units = kept;
+    State.funds += gainedCredits;
+    State.fuel += gainedSupply;
+    UI.toast(`♻️ Batch Salvaged ${salvagedCount} duplicate unit(s) for +◈${fmtNum(gainedCredits)} & +${fmtNum(gainedSupply)} Supply!`);
+    UI.refreshAll();
+  },
+
+  repairUnit(unitId) {
+    const u = State.units.find(x => x.id === unitId);
+    if (!u || u.hp >= u.maxHp) return;
+    const cost = Math.max(2, Math.round((u.maxHp - u.hp) * 0.1));
+    if (State.funds < cost) {
+      UI.toast('⚠️ Insufficient Credits for repair.');
+      return;
+    }
+    State.funds -= cost;
+    u.hp = u.maxHp;
+    UI.renderHUD();
+    UI.renderRacks();
+  },
+
+  repairAll() {
+    let totalCost = 0;
+    let count = 0;
+    for (const u of State.units) {
+      if (u.hp < u.maxHp) {
+        const c = Math.max(2, Math.round((u.maxHp - u.hp) * 0.1));
+        if (State.funds >= totalCost + c) {
+          totalCost += c;
+          u.hp = u.maxHp;
+          count++;
+        }
+      }
+    }
+    if (count > 0) {
+      State.funds -= totalCost;
+      UI.toast(`🔧 Repaired ${count} unit(s) for ◈${fmtNum(totalCost)}.`);
+      UI.renderHUD();
+      UI.renderRacks();
+    } else {
+      UI.toast('🔧 All Owned Units are already at 100% HP.');
+    }
+  },
+
+  toggleVault(unitId) {
+    const u = State.units.find(x => x.id === unitId);
+    if (!u) return;
+    u.vaulted = !u.vaulted;
+    UI.renderRacks();
+  },
+
+  salvageUnit(unitId) {
+    const idx = State.units.findIndex(x => x.id === unitId);
+    if (idx === -1) return;
+    const u = State.units[idx];
+    if (u.vaulted) {
+      UI.toast('🔒 Unlock unit from Vault before salvaging.');
+      return;
+    }
+    if (u.sectorId !== null) {
+      this.assignUnitToSector(u.id, 'NONE');
+    }
+    if (u.pilotId) {
+      const p = State.pilots.find(x => x.id === u.pilotId);
+      if (p) p.unitId = null;
+    }
+    const scrapVal = Math.max(5, Math.round(u.val * 0.35));
+    State.funds += scrapVal;
+    State.fuel += 12 + u.tier * 4;
+    State.units.splice(idx, 1);
+    UI.toast(`♻️ Salvaged ${u.name} for +◈${fmtNum(scrapVal)}.`);
+    UI.refreshAll();
+  },
+
+  assignPilotToUnit(unitId, pilotId) {
+    const u = State.units.find(x => x.id === unitId);
+    if (!u) return;
+    if (u.pilotId) {
+      const oldP = State.pilots.find(x => x.id === u.pilotId);
+      if (oldP) oldP.unitId = null;
+      u.pilotId = null;
+    }
+    if (pilotId !== 'NONE') {
+      const newP = State.pilots.find(x => x.id === pilotId);
+      if (newP) {
+        if (newP.unitId) {
+          const prevU = State.units.find(x => x.id === newP.unitId);
+          if (prevU) prevU.pilotId = null;
+        }
+        newP.unitId = u.id;
+        u.pilotId = newP.id;
+      }
+    }
+    UI.renderRacks();
+    UI.renderPilots();
+  },
+
+  assignUnitToSector(unitId, sectorVal) {
+    const u = State.units.find(x => x.id === unitId);
+    if (!u) return;
+    if (u.sectorId !== null) {
+      const oldSec = State.sectors[u.sectorId];
+      if (oldSec && oldSec.unitId === u.id) {
+        oldSec.unitId = null;
+        oldSec.progress = 0;
+      }
+      u.sectorId = null;
+    }
+    if (sectorVal !== 'NONE') {
+      const secId = parseInt(sectorVal, 10);
+      const secCfg = SECTORS[secId];
+      if (secCfg && u.tier >= secCfg.minTier) {
+        const slot = State.sectors[secId];
+        if (slot.unitId) {
+          const prevU = State.units.find(x => x.id === slot.unitId);
+          if (prevU) prevU.sectorId = null;
+        }
+        slot.unitId = u.id;
+        slot.progress = 0;
+        u.sectorId = secId;
+      } else {
+        UI.toast(`⚠️ Requires Tier T${(secCfg ? secCfg.minTier + 1 : 1)}+ for that sector.`);
+      }
+    }
+    UI.renderRacks();
+    UI.renderSectors();
+  },
+
+  assignAllIdleToPatrol() {
+    let assigned = 0;
+    const idle = State.units.filter(u => u.sectorId === null).sort((a, b) => b.tier - a.tier);
+    for (let s = SECTORS.length - 1; s >= 0; s--) {
+      if (State.sectors[s].unitId) continue;
+      const cfg = SECTORS[s];
+      const match = idle.find(u => u.sectorId === null && u.tier >= cfg.minTier);
+      if (match) {
+        this.assignUnitToSector(match.id, String(s));
+        assigned++;
+      }
+    }
+    UI.toast(assigned > 0 ? `🚩 Dispatched ${assigned} unit(s) to Shire Patrols!` : '🚩 All eligible patrol sectors are already staffed.');
+  },
+
+  recallAllPatrols() {
+    for (const s of State.sectors) {
+      if (s.unitId) {
+        const u = State.units.find(x => x.id === s.unitId);
+        if (u) u.sectorId = null;
+        s.unitId = null;
+        s.progress = 0;
+      }
+    }
+    UI.toast('🛑 Recalled all patrolling units.');
+    UI.renderRacks();
+    UI.renderSectors();
+  },
+
+  buyFuel(amt) {
+    const cost = Math.round(amt * 0.25);
+    if (State.funds < cost) {
+      UI.toast('⚠️ Insufficient Credits for Supply.');
+      return;
+    }
+    State.funds -= cost;
+    State.fuel += amt;
+    UI.renderHUD();
+    UI.toast(`🍖 Purchased +${fmtNum(amt)} Supply!`);
+  },
+
+  upgradeTech(key) {
+    const lvl = State.tech[key] || 0;
+    if (lvl >= 10) return;
+    const cost = Math.round(150 * Math.pow(2.2, lvl));
+    if (State.funds < cost) {
+      UI.toast('⚠️ Insufficient Credits for Armory Tech upgrade.');
+      return;
+    }
+    State.funds -= cost;
+    State.tech[key] = lvl + 1;
+    UI.renderHUD();
+    UI.renderTech();
+    UI.toast(`⚙️ Upgraded ${key.toUpperCase()} Tech to Level ${lvl + 1}!`);
+  },
+
+  unboxCrate(crateIdx, count = 1) {
+    const crates = [
+      { name: 'Shire Levy Chest',       cost: 20,    minT: 0, maxT: 3,  squadChance: 0.18 },
+      { name: 'Mercian Thegn Warbox',   cost: 200,   minT: 2, maxT: 6,  squadChance: 0.30 },
+      { name: 'Royal Huscarl Hoard',    cost: 2000,  minT: 5, maxT: 10, squadChance: 0.42 },
+      { name: 'Allfather Mythic Vault', cost: 15000, minT: 8, maxT: 14, squadChance: 0.55 }
+    ];
+    const box = crates[crateIdx];
+    if (!box) return;
+    const totalCost = box.cost * count;
+    if (State.funds < totalCost) {
+      UI.toast(`⚠️ Need ◈${fmtNum(totalCost)} Credits.`);
+      return;
+    }
+    State.funds -= totalCost;
+
+    let bestUnit = null;
+    for (let i = 0; i < count; i++) {
+      const r = Math.pow(Math.random(), 1.45);
+      const tier = Math.min(14, box.minT + Math.floor(r * (box.maxT - box.minT + 1)));
+      const faction = Math.floor(Math.random() * FACTIONS.length);
+      const division = Math.floor(Math.random() * ARCHETYPES.length);
+      let squadSize = 1;
+      if (Math.random() < box.squadChance) {
+        squadSize = Math.random() < 0.38 ? 5 : 3;
+      }
+      const u = createUnitFromParams({ tier, faction, division, squadSize });
+      this.addUnitToInventory(u, false);
+      State.stats.unboxed++;
+      if (!bestUnit || u.val > bestUnit.val) bestUnit = u;
+    }
+
+    UI.toast(`📦 Unboxed ${count}x ${box.name}! Best pull: [${TIERS[bestUnit.tier].code} ${SQUAD_CONFIGS[bestUnit.squadSize].short}] ${bestUnit.name} (◈${fmtNum(bestUnit.val)})`);
+    UI.refreshAll();
+  },
+
+  recruitPilotPod(podIdx) {
+    const pods = [
+      { name: 'Shire Reeve Banner',     cost: 60,   minT: 0, maxT: 3 },
+      { name: 'Royal Thegn Hall',       cost: 450,  minT: 3, maxT: 7 },
+      { name: 'Jomsborg Jarl Longhall', cost: 3200, minT: 6, maxT: 11 },
+      { name: 'Bretwalda Witan Council',cost: 18000,minT: 10,maxT: 14 }
+    ];
+    const pod = pods[podIdx];
+    if (!pod || State.funds < pod.cost) {
+      UI.toast('⚠️ Insufficient Credits.');
+      return;
+    }
+    State.funds -= pod.cost;
+    const tier = pod.minT + Math.floor(Math.random() * (pod.maxT - pod.minT + 1));
+    const p = createPilot(tier);
+    State.pilots.push(p);
+    UI.toast(`🎖️ Recruited Commander: ${p.name} (T${tier + 1})!`);
+    UI.refreshAll();
+  },
+
+  /* ==========================================================================
+     TAB 4A: 1-LANE BARGAIN BUYER AUCTION (WITH "BID" BUTTONS & AI STUN LOCK)
+     ========================================================================== */
+  spawnBuyerAuctionLot() {
+    // Pick a tier weighted around player's progression (up to T15)
+    const maxOwnedTier = State.units.reduce((m, u) => Math.max(m, u.tier), 1);
+    const maxAllowed = Math.min(14, Math.max(3, maxOwnedTier + 2));
+    const tier = Math.floor(Math.random() * (maxAllowed + 1));
+    const faction = Math.floor(Math.random() * FACTIONS.length);
+    const division = Math.floor(Math.random() * ARCHETYPES.length);
+    const sqRoll = Math.random();
+    const squadSize = sqRoll < 0.20 ? 5 : (sqRoll < 0.48 ? 3 : 1);
+
+    const unit = createUnitFromParams({ tier, faction, division, squadSize });
+    const startDisc = 0.12 + Math.random() * 0.08; // 12% to 20% of value
+    const startBid = Math.max(2, Math.round(unit.val * startDisc));
+
+    const rivals = ['Earl Guthfrith', 'Thegn Leofric', 'Jarl Haakon', 'Lady Eadgyth', 'Merchant Osgood'];
+    State.buyerAuction = {
+      unit,
+      curBid: startBid,
+      highBidder: rivals[Math.floor(Math.random() * rivals.length)],
+      playerLeading: false,
+      timeLeft: 10.0,
+      phase: 'LIVE', // 'LIVE' or 'VERDICT'
+      verdictTimer: 0,
+      aiStunTimer: 0
+    };
+    UI.renderBuyerAuctionLotFull();
+  },
+
+  forceNextBuyerLot() {
+    this.spawnBuyerAuctionLot();
+  },
+
+  bidOnBuyerAuction(increment = 1) {
+    const lot = State.buyerAuction;
+    if (!lot || lot.phase !== 'LIVE' || lot.timeLeft <= 0) return;
+    const nextBid = lot.curBid + increment;
+    if (State.funds < nextBid) {
+      UI.toast(`⚠️ Need ◈${fmtNum(nextBid)} Credits to place this bid.`);
+      return;
+    }
+    lot.curBid = nextBid;
+    lot.highBidder = 'YOU (LEADING)';
+    lot.playerLeading = true;
+    // Stun rival AI for 1.3s so player can always win if time > 0.0s
+    lot.aiStunTimer = 1.3;
+    UI.updateBuyerAuctionTextOnly();
+  },
+
+  /* ==========================================================================
+     TAB 4B: 5-LANE SYNDICATE SELLER AUCTIONS (2x–20x [BID WAR] SPIKES!)
+     ========================================================================== */
+  listUnitInSellerAuction(unitId) {
+    const uIdx = State.units.findIndex(x => x.id === unitId);
+    if (uIdx === -1) return false;
+    const u = State.units[uIdx];
+    if (u.vaulted) {
+      UI.toast('🔒 Unlock unit from Vault before auctioning.');
+      return false;
+    }
+    const laneIdx = State.sellerLanes.findIndex(l => l === null);
+    if (laneIdx === -1) {
+      UI.toast('⚠️ All 5 Seller Auction lanes are currently full!');
+      return false;
+    }
+    if (u.sectorId !== null) this.assignUnitToSector(u.id, 'NONE');
+    if (u.pilotId) {
+      const p = State.pilots.find(x => x.id === u.pilotId);
+      if (p) p.unitId = null;
+      u.pilotId = null;
+    }
+    State.units.splice(uIdx, 1);
+
+    const startBid = Math.max(5, Math.round(u.val * 0.40));
+    State.sellerLanes[laneIdx] = {
+      unit: u,
+      curBid: startBid,
+      highBidder: 'Opening Reserve (40%)',
+      hasBidder: false,
+      timeLeft: 20.0,
+      bidWar: false,
+      bidWarMult: 1
+    };
+    UI.refreshAll();
+    return true;
+  },
+
+  autoFillSellerLanes() {
+    let listed = 0;
+    const candidates = State.units
+      .filter(u => !u.vaulted && u.sectorId === null)
+      .sort((a, b) => b.val - a.val);
+
+    for (const c of candidates) {
+      if (State.sellerLanes.every(l => l !== null)) break;
+      // Keep at least 1 unit in inventory
+      if (State.units.length <= 1) break;
+      if (this.listUnitInSellerAuction(c.id)) listed++;
+    }
+    UI.toast(listed > 0 ? `🔨 Listed ${listed} unit(s) into the 5-Lane Seller Auctions!` : '⚠️ No eligible unvaulted idle units to list.');
+  },
+
+  /* ==========================================================================
+     MASTER 100ms ENGINE TICK
+     ========================================================================== */
+  tick(dt) {
+    // 1. Buyer Auction Tick
+    const bLot = State.buyerAuction;
+    if (bLot) {
+      if (bLot.phase === 'LIVE') {
+        bLot.timeLeft = Math.max(0, bLot.timeLeft - dt);
+        if (bLot.aiStunTimer > 0) {
+          bLot.aiStunTimer = Math.max(0, bLot.aiStunTimer - dt);
+        } else if (bLot.timeLeft > 0.3 && bLot.curBid < bLot.unit.val * 0.72 && Math.random() < 0.08) {
+          const rivals = ['Earl Guthfrith', 'Thegn Leofric', 'Jarl Haakon', 'Lady Eadgyth'];
+          bLot.curBid += Math.max(1, Math.round(bLot.unit.val * 0.02));
+          bLot.highBidder = rivals[Math.floor(Math.random() * rivals.length)];
+          bLot.playerLeading = false;
+        }
+
+        if (bLot.timeLeft <= 0) {
+          bLot.phase = 'VERDICT';
+          bLot.verdictTimer = 3.0;
+          if (bLot.playerLeading && State.funds >= bLot.curBid) {
+            State.funds -= bLot.curBid;
+            this.addUnitToInventory(bLot.unit, true);
+            State.stats.auctionsWon++;
+            UI.renderHUD();
+            if (UI.activeTab === 'tab-racks') UI.renderRacks();
+          }
+        }
+        UI.updateBuyerAuctionTextOnly();
+      } else {
+        bLot.verdictTimer = Math.max(0, bLot.verdictTimer - dt);
+        UI.updateBuyerAuctionTextOnly();
+        if (bLot.verdictTimer <= 0) {
+          this.spawnBuyerAuctionLot();
+        }
+      }
+    }
+
+    // 2. 5-Lane Seller Auctions Tick
+    let sellerChanged = false;
+    const npcBuyers = ['Winchester Guild', 'Jorvik Silver-Earl', 'Mercian High Thegn', 'Bamburgh Lord', 'Varangian Envoy'];
+    for (let i = 0; i < 5; i++) {
+      const lane = State.sellerLanes[i];
+      if (!lane) continue;
+      lane.timeLeft = Math.max(0, lane.timeLeft - dt);
+
+      // 1.5% chance for 2x–20x [BID WAR] Spike!
+      if (lane.timeLeft > 0 && Math.random() < 0.015) {
+        const mult = 2 + Math.floor(Math.random() * 19); // 2x to 20x
+        lane.curBid = Math.max(lane.curBid + 10, Math.round(lane.unit.val * mult));
+        lane.highBidder = `🔥 ${npcBuyers[Math.floor(Math.random() * npcBuyers.length)]} [${mult}x BID WAR!]`;
+        lane.hasBidder = true;
+        lane.bidWar = true;
+        lane.bidWarMult = mult;
+        if (lane.timeLeft <= 1.0) lane.timeLeft = 2.0;
+        sellerChanged = true;
+      } else if (lane.timeLeft > 0 && Math.random() < 0.10) {
+        const bump = Math.max(2, Math.round(lane.unit.val * (0.08 + Math.random() * 0.14)));
+        lane.curBid += bump;
+        lane.highBidder = npcBuyers[Math.floor(Math.random() * npcBuyers.length)];
+        lane.hasBidder = true;
+        if (lane.timeLeft <= 1.0) lane.timeLeft = 2.0;
+        sellerChanged = true;
+      }
+
+      if (lane.timeLeft <= 0) {
+        if (!lane.hasBidder) {
+          // Guaranteed syndicate buyout at 115% value if no NPC bids occurred
+          lane.curBid = Math.round(lane.unit.val * 1.15);
+        }
+        State.funds += lane.curBid;
+        State.stats.auctionsSold++;
+        UI.toast(`💰 Sold ${lane.unit.name} in Lane #${i + 1} for ◈${fmtNum(lane.curBid)}!`);
+        State.sellerLanes[i] = null;
+        sellerChanged = true;
+        UI.renderHUD();
+      }
+    }
+    if (UI.activeTab === 'tab-auctions') {
+      UI.updateSellerLanesDOM(sellerChanged);
+    }
+
+    // 3. Sector Patrols Tick
+    const yieldMult = 1 + (State.tech.yield || 0) * 0.05;
+    const fuelDisc = 1 - (State.tech.fuel || 0) * 0.02;
+    for (let s = 0; s < State.sectors.length; s++) {
+      const slot = State.sectors[s];
+      if (!slot.unitId) continue;
+      const u = State.units.find(x => x.id === slot.unitId);
+      if (!u) { slot.unitId = null; continue; }
+      const cfg = SECTORS[s];
+      const pilot = u.pilotId ? State.pilots.find(p => p.id === u.pilotId) : null;
+      const speedBoost = 1 + (pilot ? pilot.speedBonus * 0.01 : 0);
+
+      slot.progress += dt * speedBoost;
+      if (slot.progress >= cfg.cycleSec) {
+        slot.progress = 0;
+        const fCost = Math.max(1, Math.round(cfg.fuelCost * fuelDisc));
+        if (State.fuel < fCost && State.auto.autoSupply && State.funds >= 125) {
+          State.funds -= 125;
+          State.fuel += 500;
+        }
+        if (State.fuel >= fCost) {
+          State.fuel -= fCost;
+          const pBoost = 1 + (pilot ? pilot.yieldBonus * 0.01 : 0);
+          const sqBoost = SQUAD_CONFIGS[u.squadSize || 1].valMult;
+          const reward = Math.round(cfg.baseReward * (1 + u.tier * 0.35) * yieldMult * pBoost * sqBoost);
+          State.funds += reward;
+          State.stats.patrolsRun++;
+          UI.renderHUD();
+        }
+      }
+    }
+    if (UI.activeTab === 'tab-arena') {
+      UI.updateSectorBarsOnly();
+    }
+
+    // 4. High Command Automations
+    if (State.auto.autoRepair && Math.random() < 0.05) {
+      this.repairAll();
+    }
+    if (State.auto.autoMarch && Math.random() < 0.05) {
+      this.assignAllIdleToPatrol();
+    }
+  },
+
+  toggleAuto(key) {
+    State.auto[key] = !State.auto[key];
+    UI.renderCommand();
+  },
+
+  generateCommissions() {
+    State.commissions = [];
+    for (let i = 0; i < 6; i++) {
+      const reqTier = Math.min(14, Math.floor(i * 2));
+      const reqSquad = i >= 4 ? 3 : 1;
+      const rewardCredits = Math.round(TIERS[reqTier].val * 2.2 * (reqSquad === 3 ? 2 : 1));
+      State.commissions.push({
+        id: 'C' + i + '_' + Date.now(),
+        title: `Witan Charter #${i + 1}: Supply ${TIERS[reqTier].code}+ ${reqSquad > 1 ? '3-Man+ Squad' : 'Unit'}`,
+        reqTier,
+        reqSquad,
+        rewardCredits,
+        done: false
+      });
+    }
+  },
+
+  fulfillCommission(idx) {
+    const c = State.commissions[idx];
+    if (!c || c.done) return;
+    const matchIdx = State.units.findIndex(u => !u.vaulted && u.sectorId === null && u.tier >= c.reqTier && (u.squadSize || 1) >= c.reqSquad);
+    if (matchIdx === -1) {
+      UI.toast(`⚠️ Need an unvaulted idle ${TIERS[c.reqTier].code}+ (${c.reqSquad}-Man+) unit.`);
+      return;
+    }
+    const u = State.units[matchIdx];
+    if (State.units.length <= 1) {
+      UI.toast('⚠️ Keep at least 1 unit in your roster.');
+      return;
+    }
+    if (u.pilotId) {
+      const p = State.pilots.find(x => x.id === u.pilotId);
+      if (p) p.unitId = null;
+    }
+    State.units.splice(matchIdx, 1);
+    c.done = true;
+    State.funds += c.rewardCredits;
+    const bonusUnit = createUnitFromParams({
+      tier: Math.min(14, c.reqTier + 1),
+      faction: Math.floor(Math.random() * FACTIONS.length),
+      division: Math.floor(Math.random() * ARCHETYPES.length),
+      squadSize: c.reqSquad
+    });
+    this.addUnitToInventory(bonusUnit, false);
+    UI.toast(`📜 Charter Fulfilled! +◈${fmtNum(c.rewardCredits)} & Bonus [${TIERS[bonusUnit.tier].code}] ${bonusUnit.name}!`);
+    if (State.commissions.every(x => x.done)) this.generateCommissions();
+    UI.refreshAll();
+  },
+
+  claimMilestone(mId) {
+    if (State.milestonesClaimed[mId]) return;
+    const m = UI.getMilestoneById(mId);
+    if (!m || !m.ready) return;
+    State.milestonesClaimed[mId] = true;
+    State.funds += m.reward;
+    UI.renderHUD();
+    UI.renderMilestones();
+    UI.toast(`🏆 Claimed Trial #${mId}: +◈${fmtNum(m.reward)} Credits!`);
+  },
+
+  claimAllMilestones() {
+    let count = 0, total = 0;
+    for (let i = 1; i <= 150; i++) {
+      if (State.milestonesClaimed[i]) continue;
+      const m = UI.getMilestoneById(i);
+      if (m && m.ready) {
+        State.milestonesClaimed[i] = true;
+        total += m.reward;
+        count++;
+      }
+    }
+    if (count > 0) {
+      State.funds += total;
+      UI.toast(`✨ Claimed ${count} Trial(s) for +◈${fmtNum(total)} Credits!`);
+      UI.refreshAll();
+    } else {
+      UI.toast('🏆 No completed Trials ready to claim yet.');
+    }
+  },
+
+  importTradeCode() {
+    const raw = (document.getElementById('trade-code-input').value || '').trim().toUpperCase();
+    if (!raw) return;
+    if (raw.startsWith('CMD-')) {
+      const p = createPilot(Math.min(14, parseInt(raw.slice(4), 36) % 15 || 2));
+      State.pilots.push(p);
+      UI.toast(`📡 Imported Commander: ${p.name}!`);
+    } else if (raw.startsWith('WFC-')) {
+      const parts = raw.split('-');
+      const header = parts[1] || '00S1';
+      const tier = Math.min(14, parseInt(header[0], 36) || 0);
+      const div = Math.min(9, parseInt(header[1], 36) || 0);
+      const sqMatch = header.match(/S(\d)/);
+      const squadSize = sqMatch ? parseInt(sqMatch[1], 10) : 1;
+      const hexes = parts.slice(2, 7).map(h => '#' + h.padEnd(6, '0').slice(0, 6));
+      const u = createUnitFromParams({ tier, faction: 0, division: div, squadSize, customHexColors: hexes.length === 5 ? hexes : null });
+      this.addUnitToInventory(u, true);
+    } else if (raw.startsWith('WF-')) {
+      const dex = parseInt(raw.slice(3), 36) || 1;
+      const decoded = decodeCodexNum(dex);
+      const u = createUnitFromParams(decoded);
+      this.addUnitToInventory(u, true);
+    } else {
+      UI.toast('⚠️ Invalid Trade Code format.');
+      return;
+    }
+    document.getElementById('code-modal').classList.remove('open');
+    UI.refreshAll();
+  }
+};
+
+/* ============================================================================
+   5. TAB 2: CUSTOM FORGE, SQUAD BUILDER & 5-ZONE HEX PAINT STUDIO
+   ============================================================================ */
+const CustomForge = {
+  snapshot: null,
+  yaw: 0.55,
+  pitch: 0.28,
+  zoomVal: 3.1,
+  spinning: true,
+  hexZones: ['#D6E0EE', '#D02430', '#EEB830', '#7D181C', '#38BDF8'],
+
+  init() {
+    const tierSel = document.getElementById('forge-tier-sel');
+    tierSel.innerHTML = TIERS.map(t => `<option value="${t.id}">${t.code}: ${t.name} (◈${fmtNum(t.val)})</option>`).join('');
+
+    this.renderHexZonesUI();
+    this.setupTurntableEvents();
+    this.updateConfig();
+    requestAnimationFrame(() => this.animateLoop());
+  },
+
+  renderHexZonesUI() {
+    const zoneNames = [
+      'Zone 1: Ring-Mail & Steel',
+      'Zone 2: Shield & Trim',
+      'Zone 3: Gold & Braid Cuffs',
+      'Zone 4: Cloak & Tunic',
+      'Zone 5: Runic Weapon Glow'
+    ];
+    const container = document.getElementById('hex-studio-zones');
+    const rows = [];
+    for (let z = 0; z < 5; z++) {
+      const swatchesHtml = QUICK_SWATCHES.map(sw =>
+        `<div class="color-swatch" style="background:${sw};" onclick="CustomForge.setZoneHex(${z}, '${sw}')"></div>`
+      ).join('');
+      rows.push(`
+        <div style="margin-bottom:6px;">
+          <div style="font-size:9px; font-weight:800; color:var(--silver); margin-bottom:2px;">${zoneNames[z]}</div>
+          <div class="paint-zone-row">
+            <input type="text" class="hex-input" id="hex-text-${z}" value="${this.hexZones[z]}" onchange="CustomForge.setZoneHex(${z}, this.value)" />
+            <input type="color" class="color-wheel-input" id="hex-pick-${z}" value="${this.hexZones[z]}" oninput="CustomForge.setZoneHex(${z}, this.value)" />
+            <div class="swatch-row">${swatchesHtml}</div>
+          </div>
+        </div>
+      `);
+    }
+    container.innerHTML = rows.join('');
+  },
+
+  setZoneHex(idx, val) {
+    let clean = (val || '').trim().toUpperCase();
+    if (!clean.startsWith('#')) clean = '#' + clean;
+    if (!/^#[0-9A-F]{6}$/.test(clean)) return;
+    this.hexZones[idx] = clean;
+    const tInput = document.getElementById(`hex-text-${idx}`);
+    const pInput = document.getElementById(`hex-pick-${idx}`);
+    if (tInput) tInput.value = clean;
+    if (pInput) pInput.value = clean;
+    this.updateConfig();
+  },
+
+  getPreviewUnit() {
+    const tier = parseInt(document.getElementById('forge-tier-sel').value || '0', 10);
+    const squadSize = parseInt(document.getElementById('forge-squad-sel').value || '1', 10);
+    const beard = document.getElementById('forge-beard-sel').value || 'trim_fork';
+    const pose = document.getElementById('forge-pose-sel').value || 'heroic';
+    const armor = document.getElementById('forge-armor-sel').value || 'standard';
+    const helm = document.getElementById('forge-helm-sel').value || 'tvisor';
+    const weapon = document.getElementById('forge-weapon-sel').value || 'darksaber';
+    const back = document.getElementById('forge-back-sel').value || 'both';
+    const plinth = document.getElementById('forge-plinth-sel').value || 'boulder';
+
+    return {
+      tier,
+      faction: 0,
+      division: 0,
+      squadSize,
+      beardStyle: beard,
+      dexNum: calcCodexNum(tier, 0, 0, squadSize),
+      customParts: { pose, armor, helm, weapon, back, plinth, beard, squadSize },
+      customHexColors: [...this.hexZones]
+    };
+  },
+
+  updateConfig() {
+    const u = this.getPreviewUnit();
+    const tData = TIERS[u.tier] || TIERS[0];
+    const sqCfg = SQUAD_CONFIGS[u.squadSize || 1];
+    const credCost = Math.max(10, Math.round(tData.val * 0.85 * sqCfg.valMult));
+    const supCost = Math.round((15 + u.tier * 10) * sqCfg.size);
+    document.getElementById('forge-cost-label').textContent = `Cost: ◈${fmtNum(credCost)} + ${fmtNum(supCost)} Supply`;
+
+    this.snapshot = VoxelEngine.createSnapshot(u);
+    this.zoomVal = u.squadSize === 5 ? 2.65 : (u.squadSize === 3 ? 2.85 : 3.2);
+  },
+
+  randomizeDesign() {
+    const randPick = selId => {
+      const el = document.getElementById(selId);
+      if (!el) return;
+      el.selectedIndex = Math.floor(Math.random() * el.options.length);
+    };
+    randPick('forge-squad-sel');
+    randPick('forge-beard-sel');
+    randPick('forge-pose-sel');
+    randPick('forge-armor-sel');
+    randPick('forge-helm-sel');
+    randPick('forge-weapon-sel');
+    randPick('forge-back-sel');
+    randPick('forge-plinth-sel');
+
+    for (let z = 0; z < 5; z++) {
+      const sw = QUICK_SWATCHES[Math.floor(Math.random() * QUICK_SWATCHES.length)];
+      this.setZoneHex(z, sw);
+    }
+    this.updateConfig();
+  },
+
+  forgeAndCommission(sendToAuction = false) {
+    const preview = this.getPreviewUnit();
+    const tData = TIERS[preview.tier] || TIERS[0];
+    const sqCfg = SQUAD_CONFIGS[preview.squadSize || 1];
+    const credCost = Math.max(10, Math.round(tData.val * 0.85 * sqCfg.valMult));
+    const supCost = Math.round((15 + preview.tier * 10) * sqCfg.size);
+
+    if (State.funds < credCost || State.fuel < supCost) {
+      UI.toast(`⚠️ Need ◈${fmtNum(credCost)} Credits & ${fmtNum(supCost)} Supply.`);
+      return;
+    }
+    State.funds -= credCost;
+    State.fuel -= supCost;
+
+    // Roll Artisan Grade (100% Masterwork if God Mode is ON)
+    let chosenGrade = ARTISAN_GRADES[0];
+    if (State.godMode) {
+      chosenGrade = ARTISAN_GRADES[4];
+    } else {
+      const r = Math.random();
+      let acc = 0;
+      for (const g of ARTISAN_GRADES) {
+        acc += g.chance;
+        if (r <= acc) { chosenGrade = g; break; }
+      }
+    }
+    const mult = chosenGrade.minM + Math.random() * (chosenGrade.maxM - chosenGrade.minM);
+    const customName = document.getElementById('forge-custom-name').value || '';
+
+    const forgedUnit = createUnitFromParams({
+      tier: preview.tier,
+      faction: Math.floor(Math.random() * FACTIONS.length),
+      division: Math.floor(Math.random() * ARCHETYPES.length),
+      squadSize: preview.squadSize,
+      customName,
+      customParts: preview.customParts,
+      customHexColors: preview.customHexColors,
+      artisanGrade: { name: chosenGrade.name, mult }
+    });
+
+    State.stats.forged++;
+    document.getElementById('forge-last-roll-banner').innerHTML =
+      `<span style="color:${chosenGrade.color}; font-weight:900;">🔨 FORGED: ${chosenGrade.name} (${mult.toFixed(2)}x) — [${SQUAD_CONFIGS[forgedUnit.squadSize].label}] ${forgedUnit.name} Appraised at ◈${fmtNum(forgedUnit.val)}!</span>`;
+
+    this.addOrAuctionForged(forgedUnit, sendToAuction);
+  },
+
+  addOrAuctionForged(unit, sendToAuction) {
+    Game.addUnitToInventory(unit, !sendToAuction);
+    if (sendToAuction) {
+      if (Game.listUnitInSellerAuction(unit.id)) {
+        UI.switchTab('tab-auctions');
+        UI.toast(`💰 Forged & listed ${unit.name} (◈${fmtNum(unit.val)}) in Seller Auctions!`);
+      }
+    }
+    UI.refreshAll();
+  },
+
+  toggleSpin() { this.spinning = !this.spinning; },
+  zoom(delta) { this.zoomVal = Math.max(1.8, Math.min(5.0, this.zoomVal + delta)); },
+
+  setupTurntableEvents() {
+    const c = document.getElementById('forge-canvas');
+    let dragging = false, lx = 0, ly = 0;
+    c.addEventListener('pointerdown', e => {
+      dragging = true; lx = e.clientX; ly = e.clientY;
+      c.setPointerCapture(e.pointerId);
+    });
+    c.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      this.yaw += (e.clientX - lx) * 0.012;
+      this.pitch = Math.max(-0.6, Math.min(0.85, this.pitch + (e.clientY - ly) * 0.01));
+      lx = e.clientX; ly = e.clientY;
+    });
+    c.addEventListener('pointerup', () => { dragging = false; });
+  },
+
+  animateLoop() {
+    if (UI.activeTab === 'tab-forge' && this.snapshot) {
+      if (this.spinning) this.yaw += 0.012;
+      const c = document.getElementById('forge-canvas');
+      VoxelEngine.renderSnapshotToCanvas(this.snapshot, c, this.yaw, this.pitch, this.zoomVal);
+    }
+    requestAnimationFrame(() => this.animateLoop());
+  }
+};
+
+/* ============================================================================
+   6. 512² ISOLATED 3D INSPECTOR MODAL
+   ============================================================================ */
+const Inspector = {
+  openFlag: false,
+  snapshot: null,
+  yaw: 0.55,
+  pitch: 0.28,
+  zoomVal: 3.2,
+  spinning: true,
+  currentCode: '',
+
+  open(source, idxOrId) {
+    let unit = null;
+    if (source === 'RACK') {
+      unit = State.units.find(x => x.id === idxOrId);
+    } else if (source === 'BUYER' && State.buyerAuction) {
+      unit = State.buyerAuction.unit;
+    } else if (source === 'SELLER' && State.sellerLanes[idxOrId]) {
+      unit = State.sellerLanes[idxOrId].unit;
+    }
+    if (!unit) return;
+
+    this.snapshot = VoxelEngine.createSnapshot(unit);
+    this.zoomVal = unit.squadSize === 5 ? 2.65 : (unit.squadSize === 3 ? 2.85 : 3.2);
+    this.openFlag = true;
+
+    const tData = TIERS[unit.tier] || TIERS[0];
+    const fData = FACTIONS[unit.faction || 0] || FACTIONS[0];
+    const aData = ARCHETYPES[unit.division || 0] || ARCHETYPES[0];
+    const sqCfg = SQUAD_CONFIGS[unit.squadSize || 1];
+    const beardObj = BEARD_STYLES.find(b => b.id === unit.beardStyle) || BEARD_STYLES[0];
+
+    document.getElementById('insp-name').textContent = `#${String(unit.dexNum).padStart(4, '0')} ${unit.name}`;
+    document.getElementById('insp-sub').textContent = `${tData.code} ${tData.name} • ${sqCfg.label} • ${unit.finish}`;
+    document.getElementById('insp-details').innerHTML = `
+      <div><b>Faction:</b> ${fData.name}</div>
+      <div><b>Heroic Class:</b> ${aData.name} (Group ${aData.group})</div>
+      <div><b>Squad Formation:</b> ${sqCfg.label} (${sqCfg.size} Sculpted Model${sqCfg.size > 1 ? 's' : ''})</div>
+      <div><b>Beard &amp; Braids:</b> ${beardObj.name}</div>
+      <div><b>Combat Telemetry:</b> ❤️ ${fmtNum(unit.hp)}/${fmtNum(unit.maxHp)} HP • ⚔️ ${fmtNum(unit.atk)} ATK</div>
+      <div><b>Appraisal Value:</b> <span class="val-gold">◈${fmtNum(unit.val)}</span></div>
+    `;
+    this.currentCode = encodeUnitTradeCode(unit);
+    document.getElementById('insp-code').textContent = this.currentCode;
+    document.getElementById('inspect-vox-stats').textContent = `128³ Snapshot (${fmtNum(this.snapshot.count)} Surface Voxels)`;
+    document.getElementById('inspect-modal').classList.add('open');
+  },
+
+  close() {
+    this.openFlag = false;
+    document.getElementById('inspect-modal').classList.remove('open');
+  },
+
+  toggleSpin() { this.spinning = !this.spinning; },
+  zoom(d) { this.zoomVal = Math.max(1.8, Math.min(5.2, this.zoomVal + d)); },
+  resetCam() { this.yaw = 0.55; this.pitch = 0.28; this.zoomVal = 3.1; },
+
+  copyCode() {
+    const temp = document.createElement('textarea');
+    temp.value = this.currentCode;
+    document.body.appendChild(temp);
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+    UI.toast(`📋 Copied Trade Code: ${this.currentCode}`);
+  },
+
+  initEvents() {
+    const c = document.getElementById('inspect-canvas');
+    let drag = false, lx = 0, ly = 0;
+    c.addEventListener('pointerdown', e => { drag = true; lx = e.clientX; ly = e.clientY; c.setPointerCapture(e.pointerId); });
+    c.addEventListener('pointermove', e => {
+      if (!drag) return;
+      this.yaw += (e.clientX - lx) * 0.012;
+      this.pitch = Math.max(-0.6, Math.min(0.85, this.pitch + (e.clientY - ly) * 0.01));
+      lx = e.clientX; ly = e.clientY;
+    });
+    c.addEventListener('pointerup', () => { drag = false; });
+
+    const loop = () => {
+      if (this.openFlag && this.snapshot) {
+        if (this.spinning) this.yaw += 0.012;
+        VoxelEngine.renderSnapshotToCanvas(this.snapshot, c, this.yaw, this.pitch, this.zoomVal);
+      }
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+};
+
+/* ============================================================================
+   7. TAB 5A: 1v1 / 3v3 / 5v5 TABLETOP WARGAME ARENA
+   ============================================================================ */
+const Arena = {
+  active: false,
+  mode: 1,
+  playerTeam: [],
+  enemyTeam: [],
+  logs: [],
+
+  startMatch(count) {
+    const healthy = State.units.filter(u => u.hp > 0).sort((a, b) => (b.atk + b.hp) - (a.atk + a.hp));
+    if (healthy.length === 0) {
+      UI.toast('⚠️ Repair or acquire at least 1 unit to enter the Shieldwall Arena!');
+      return;
+    }
+    this.mode = count;
+    this.active = true;
+    this.playerTeam = healthy.slice(0, count).map(u => ({
+      refId: u.id,
+      name: u.name,
+      tier: u.tier,
+      squadSize: u.squadSize || 1,
+      group: ARCHETYPES[u.division || 0].group,
+      hp: u.hp,
+      maxHp: u.maxHp,
+      atk: Math.round(u.atk * (1 + (State.tech.atk || 0) * 0.04)),
+      thumb: u.thumb
+    }));
+
+    const avgTier = Math.round(this.playerTeam.reduce((s, x) => s + x.tier, 0) / this.playerTeam.length);
+    this.enemyTeam = [];
+    for (let i = 0; i < count; i++) {
+      const eTier = Math.max(0, Math.min(14, avgTier + (Math.random() < 0.35 ? 1 : 0)));
+      const eFac = Math.floor(Math.random() * FACTIONS.length);
+      const eDiv = Math.floor(Math.random() * ARCHETYPES.length);
+      const eSq = Math.random() < 0.35 ? (Math.random() < 0.4 ? 5 : 3) : 1;
+      const eUnit = createUnitFromParams({ tier: eTier, faction: eFac, division: eDiv, squadSize: eSq });
+      this.enemyTeam.push({
+        unitObj: eUnit,
+        name: eUnit.name,
+        tier: eUnit.tier,
+        squadSize: eUnit.squadSize,
+        group: ARCHETYPES[eDiv].group,
+        hp: eUnit.maxHp,
+        maxHp: eUnit.maxHp,
+        atk: eUnit.atk,
+        thumb: eUnit.thumb
+      });
+    }
+
+    this.logs = [`⚔️ Deployed ${this.playerTeam.length}v${this.enemyTeam.length} Shieldwall Battle! Choose a Tactical Order.`];
+    document.getElementById('arena-status-banner').textContent = `${count}v${count} BATTLE LIVE — Choose Order below!`;
+    this.renderArena();
+  },
+
+  issueOrder(order) {
+    if (!this.active) {
+      this.startMatch(3);
+      return;
+    }
+    const d1 = 1 + Math.floor(Math.random() * 6);
+    const d2 = 1 + Math.floor(Math.random() * 6);
+    document.getElementById('die-1').textContent = d1;
+    document.getElementById('die-2').textContent = d2;
+    const rollMult = 0.75 + ((d1 + d2) / 12) * 0.65;
+
+    // Player turn
+    for (const p of this.playerTeam) {
+      if (p.hp <= 0) continue;
+      if (order === 'RALLY') {
+        const heal = Math.round(p.maxHp * 0.22);
+        p.hp = Math.min(p.maxHp, p.hp + heal);
+        this.logs.unshift(`📯 ${p.name} rallies for +${fmtNum(heal)} HP!`);
+      }
+      const aliveEnemies = this.enemyTeam.filter(e => e.hp > 0);
+      if (aliveEnemies.length === 0) break;
+      const target = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+
+      // Counter triangle A > B > C > A (+45% DMG)
+      const counters = (p.group === 'A' && target.group === 'B') || (p.group === 'B' && target.group === 'C') || (p.group === 'C' && target.group === 'A');
+      const orderBoost = order === 'CHARGE' ? 1.25 : (order === 'ARCANE' ? 1.20 : 1.05);
+      const dmg = Math.max(5, Math.round(p.atk * rollMult * orderBoost * (counters ? 1.45 : 1.0)));
+      target.hp = Math.max(0, target.hp - dmg);
+      this.logs.unshift(`⚔️ ${p.name} hits ${target.name} for ${fmtNum(dmg)} DMG${counters ? ' [COUNTER +45%!]': ''}!`);
+    }
+
+    // Check Victory
+    if (this.enemyTeam.every(e => e.hp <= 0)) {
+      this.active = false;
+      State.stats.battlesWon++;
+      const totalEnemyVal = this.enemyTeam.reduce((s, e) => s + e.unitObj.val, 0);
+      const spoils = Math.max(25, Math.round(totalEnemyVal * 0.55));
+      State.funds += spoils;
+
+      const capChance = 0.45 + (State.tech.cap || 0) * 0.02;
+      let capMsg = '';
+      if (Math.random() < capChance) {
+        const captured = this.enemyTeam[Math.floor(Math.random() * this.enemyTeam.length)].unitObj;
+        Game.addUnitToInventory(captured, false);
+        capMsg = ` + CAPTURED ${captured.name}!`;
+      }
+      this.logs.unshift(`🏆 VICTORY! Won +◈${fmtNum(spoils)} Spoils${capMsg}`);
+      document.getElementById('arena-status-banner').textContent = `🏆 VICTORY! +◈${fmtNum(spoils)} Credits${capMsg}`;
+      this.syncPlayerHP();
+      this.renderArena();
+      UI.refreshAll();
+      return;
+    }
+
+    // Enemy counter-attack
+    const defReduction = order === 'WALL' ? 0.62 : 0.90;
+    for (const e of this.enemyTeam) {
+      if (e.hp <= 0) continue;
+      const alivePlayers = this.playerTeam.filter(p => p.hp > 0);
+      if (alivePlayers.length === 0) break;
+      const target = alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
+      const dmg = Math.max(4, Math.round(e.atk * defReduction * (0.8 + Math.random() * 0.4)));
+      target.hp = Math.max(0, target.hp - dmg);
+    }
+
+    if (this.playerTeam.every(p => p.hp <= 0)) {
+      this.active = false;
+      this.logs.unshift('💀 DEFEAT! Your Shieldwall collapsed. Repair your units in Tab 1.');
+      document.getElementById('arena-status-banner').textContent = '💀 DEFEAT — Repair and deploy again!';
+    }
+    this.syncPlayerHP();
+    this.renderArena();
+    UI.renderHUD();
+  },
+
+  syncPlayerHP() {
+    for (const p of this.playerTeam) {
+      const real = State.units.find(u => u.id === p.refId);
+      if (real) real.hp = Math.max(10, p.hp);
+    }
+  },
+
+  renderArena() {
+    const renderSide = list => list.map(f => {
+      const pct = Math.max(0, Math.min(100, Math.round((f.hp / f.maxHp) * 100)));
+      return `
+        <div class="fighter-slot ${f.hp <= 0 ? 'dead' : ''}">
+          <img src="${f.thumb}" style="width:44px; height:44px; border:1px solid #334155; border-radius:4px;" />
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:10px; font-weight:800; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              [${TIERS[f.tier].code} ${SQUAD_CONFIGS[f.squadSize || 1].short}] ${f.name}
+            </div>
+            <div style="font-size:9px; color:var(--text-dim);">❤️ ${fmtNum(f.hp)}/${fmtNum(f.maxHp)} • ⚔️ ${fmtNum(f.atk)}</div>
+            <div class="hp-bar-outer" style="margin-top:2px;"><div class="hp-bar-inner" style="width:${pct}%;"></div></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('arena-player-team').innerHTML = renderSide(this.playerTeam);
+    document.getElementById('arena-enemy-team').innerHTML = renderSide(this.enemyTeam);
+    document.getElementById('arena-log').innerHTML = this.logs.slice(0, 25).map(l => `<div>${l}</div>`).join('');
+  }
+};
+
+/* ============================================================================
+   8. UI RENDERER (ZERO innerHTML += INSIDE LOOPS)
+   ============================================================================ */
+const UI = {
+  activeTab: 'tab-racks',
+
+  initFilters() {
+    const divSel = document.getElementById('filter-div');
+    divSel.innerHTML = `<option value="ALL">All 10 Classes</option>` +
+      ARCHETYPES.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+
+    const tierSel = document.getElementById('filter-tier');
+    tierSel.innerHTML = `<option value="ALL">All 15 Tiers (T1–T15)</option>` +
+      TIERS.map(t => `<option value="${t.id}">${t.code}: ${t.name}</option>`).join('');
+  },
+
+  switchTab(tabId) {
+    this.activeTab = tabId;
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === tabId));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+    this.refreshAll();
+  },
+
+  refreshAll() {
+    this.renderHUD();
+    if (this.activeTab === 'tab-racks') {
+      this.renderRacks();
+      this.renderTech();
+      this.renderPilots();
+    } else if (this.activeTab === 'tab-boxes') {
+      this.renderBoxes();
+    } else if (this.activeTab === 'tab-auctions') {
+      this.renderBuyerAuctionLotFull();
+      this.updateSellerLanesDOM(true);
+    } else if (this.activeTab === 'tab-arena') {
+      this.renderSectors();
+    } else if (this.activeTab === 'tab-command') {
+      this.renderCommand();
+      this.renderMilestones();
+    }
+  },
+
+  renderHUD() {
+    document.getElementById('hud-funds').textContent = '◈' + fmtNum(State.funds);
+    document.getElementById('hud-fuel').textContent = fmtNum(State.fuel);
+    document.getElementById('hud-fleet').textContent = fmtNum(State.units.length);
+    document.getElementById('rack-count').textContent = fmtNum(State.units.length);
+
+    const codexCount = Object.keys(State.codex).length;
+    document.getElementById('hud-codex').textContent = `${codexCount}/2000`;
+
+    const milesCount = Object.keys(State.milestonesClaimed).length;
+    document.getElementById('hud-miles').textContent = `${milesCount}/150`;
+
+    const vaultCount = State.units.filter(u => u.vaulted).length;
+    const vEl = document.getElementById('vault-inline-count');
+    if (vEl) vEl.textContent = vaultCount;
+  },
+
+  renderRacks() {
+    const vaultOnly = document.getElementById('filter-vault-only').checked;
+    const sqFilter = document.getElementById('filter-squad').value;
+    const divFilter = document.getElementById('filter-div').value;
+    const tierFilter = document.getElementById('filter-tier').value;
+    const sortBy = document.getElementById('sort-racks').value;
+
+    let list = State.units.filter(u => {
+      if (vaultOnly && !u.vaulted) return false;
+      if (sqFilter !== 'ALL' && String(u.squadSize || 1) !== sqFilter) return false;
+      if (divFilter !== 'ALL' && String(u.division) !== divFilter) return false;
+      if (tierFilter !== 'ALL' && String(u.tier) !== tierFilter) return false;
+      return true;
+    });
+
+    if (sortBy === 'VAL_DESC') list.sort((a, b) => b.val - a.val);
+    else if (sortBy === 'TIER_DESC') list.sort((a, b) => b.tier - a.tier || b.val - a.val);
+    else if (sortBy === 'SQUAD_DESC') list.sort((a, b) => (b.squadSize || 1) - (a.squadSize || 1) || b.val - a.val);
+    else if (sortBy === 'DEX_ASC') list.sort((a, b) => a.dexNum - b.dexNum);
+    else if (sortBy === 'HP_ASC') list.sort((a, b) => (a.hp / a.maxHp) - (b.hp / b.maxHp));
+
+    const cards = [];
+    for (const u of list) {
+      if (!u.thumb) u.thumb = VoxelEngine.bakeThumbnail(u);
+      const tData = TIERS[u.tier] || TIERS[0];
+      const sqCfg = SQUAD_CONFIGS[u.squadSize || 1];
+      const hpPct = Math.max(0, Math.min(100, Math.round((u.hp / u.maxHp) * 100)));
+
+      const pilotOpts = [`<option value="NONE">🎖️ Commander: None</option>`];
+      for (const p of State.pilots) {
+        if (!p.unitId || p.unitId === u.id) {
+          pilotOpts.push(`<option value="${p.id}" ${u.pilotId === p.id ? 'selected' : ''}>🎖️ ${p.name} (+${p.yieldBonus}%)</option>`);
+        }
+      }
+
+      const secOpts = [`<option value="NONE">🚩 Patrol: Idle</option>`];
+      for (const s of SECTORS) {
+        if (u.tier >= s.minTier) {
+          secOpts.push(`<option value="${s.id}" ${u.sectorId === s.id ? 'selected' : ''}>🚩 ${s.name}</option>`);
+        }
+      }
+
+      cards.push(`
+        <div class="unit-card">
+          <div class="unit-thumb-wrap" onclick="Inspector.open('RACK', '${u.id}')">
+            <img class="unit-thumb" src="${u.thumb}" alt="${u.name}" />
+            <span class="tier-tag" style="color:${tData.color};">${tData.code}</span>
+            <span class="squad-tag">${sqCfg.short}</span>
+            <span class="dex-tag">#${String(u.dexNum).padStart(4, '0')}</span>
+            <span class="finish-tag">${u.finish}</span>
+            <span class="inspect-hint">🔍 3D</span>
+          </div>
+          <div class="unit-title">${u.name}</div>
+          <div class="unit-meta">
+            <span>${FACTIONS[u.faction || 0].name}</span>
+            <b class="val-gold">◈${fmtNum(u.val)}</b>
+          </div>
+          <div class="stat-row">
+            <div>❤️ ${fmtNum(u.hp)}/${fmtNum(u.maxHp)}</div>
+            <div>⚔️ ${fmtNum(u.atk)}</div>
+            <div>👥 ${sqCfg.size}x</div>
+          </div>
+          <div class="hp-bar-outer"><div class="hp-bar-inner" style="width:${hpPct}%;"></div></div>
+          <select onchange="Game.assignPilotToUnit('${u.id}', this.value)">${pilotOpts.join('')}</select>
+          <select onchange="Game.assignUnitToSector('${u.id}', this.value)">${secOpts.join('')}</select>
+          <div class="btn-row">
+            <button class="btn btn-xs btn-gold" style="flex:1;" onclick="Game.listUnitInSellerAuction('${u.id}')">🔨 Auction</button>
+            <button class="btn btn-xs ${u.vaulted ? 'btn-silver' : ''}" onclick="Game.toggleVault('${u.id}')">${u.vaulted ? '🔒' : '🔓'}</button>
+            <button class="btn btn-xs btn-emerald" onclick="Game.repairUnit('${u.id}')">🔧</button>
+            <button class="btn btn-xs btn-crimson" onclick="Game.salvageUnit('${u.id}')">♻️</button>
+          </div>
+        </div>
+      `);
+    }
+
+    document.getElementById('rack-list').innerHTML = cards.length > 0
+      ? cards.join('')
+      : `<div class="unit-card"><div class="unit-title">No matching units found.</div><div class="section-sub">Adjust filters above or unbox crates in Tab 3!</div></div>`;
+  },
+
+  renderTech() {
+    const items = [
+      { key: 'yield', name: 'Wergild Tribute Mint',   desc: '+5% Patrol Credits per level' },
+      { key: 'fuel',  name: 'Burh Granary Stores',    desc: '-2% Patrol Supply usage per level' },
+      { key: 'atk',   name: 'Ulfberht Crucible Steel',desc: '+4% Shieldwall ATK per level' },
+      { key: 'cap',   name: 'Thrall Capture Nets',    desc: '+2% Arena Unit Capture per level' }
+    ];
+    const html = items.map(it => {
+      const lvl = State.tech[it.key] || 0;
+      const cost = Math.round(150 * Math.pow(2.2, lvl));
+      return `
+        <div class="unit-card">
+          <div class="unit-title">${it.name} (Lv.${lvl}/10)</div>
+          <div class="section-sub">${it.desc}</div>
+          <button class="btn btn-gold" style="margin-top:6px;" ${lvl >= 10 ? 'disabled' : ''} onclick="Game.upgradeTech('${it.key}')">
+            ${lvl >= 10 ? 'MAX LEVEL' : `Upgrade (◈${fmtNum(cost)})`}
+          </button>
+        </div>
+      `;
+    });
+    document.getElementById('tech-list').innerHTML = html.join('');
+  },
+
+  renderPilots() {
+    document.getElementById('pilot-count').textContent = State.pilots.length;
+    const html = State.pilots.map(p => {
+      const code = `CMD-${p.tier.toString(36).toUpperCase()}${p.yieldBonus.toString(36).toUpperCase()}`;
+      return `
+        <div class="unit-card">
+          <div class="unit-title">🎖️ ${p.name}</div>
+          <div class="unit-meta"><span>Rank T${p.tier + 1}</span><code style="color:var(--gold);">${code}</code></div>
+          <div class="stat-row">
+            <div>+${p.yieldBonus}% Yield</div>
+            <div>+${p.speedBonus}% Spd</div>
+            <div>+${p.armorBonus}% Def</div>
+          </div>
+        </div>
+      `;
+    });
+    document.getElementById('pilot-list').innerHTML = html.join('');
+  },
+
+  renderBoxes() {
+    const crates = [
+      { idx: 0, name: 'Shire Levy Chest',       cost: 20,    tiers: 'T1–T4 + 18% Squad Chance' },
+      { idx: 1, name: 'Mercian Thegn Warbox',   cost: 200,   tiers: 'T3–T7 + 30% Squad Chance' },
+      { idx: 2, name: 'Royal Huscarl Hoard',    cost: 2000,  tiers: 'T6–T11 + 42% Squad Chance' },
+      { idx: 3, name: 'Allfather Mythic Vault', cost: 15000, tiers: 'T9–T15 + 55% Squad Chance' }
+    ];
+    document.getElementById('warbox-list').innerHTML = crates.map(c => `
+      <div class="unit-card">
+        <div class="unit-title">📦 ${c.name}</div>
+        <div class="section-sub">${c.tiers}</div>
+        <div class="val-gold" style="font-weight:900; font-size:12px; margin:4px 0;">◈${fmtNum(c.cost)} / Crate</div>
+        <div class="btn-row">
+          <button class="btn btn-silver" style="flex:1;" onclick="Game.unboxCrate(${c.idx}, 1)">1x</button>
+          <button class="btn btn-gold" style="flex:1;" onclick="Game.unboxCrate(${c.idx}, 5)">5x</button>
+          <button class="btn btn-emerald" style="flex:1;" onclick="Game.unboxCrate(${c.idx}, 10)">10x</button>
+        </div>
+      </div>
+    `).join('');
+
+    const pods = [
+      { idx: 0, name: 'Shire Reeve Banner',      cost: 60,    tiers: 'T1–T4 Commanders' },
+      { idx: 1, name: 'Royal Thegn Hall',        cost: 450,   tiers: 'T4–T8 Commanders' },
+      { idx: 2, name: 'Jomsborg Jarl Longhall',  cost: 3200,  tiers: 'T7–T12 Commanders' },
+      { idx: 3, name: 'Bretwalda Witan Council', cost: 18000, tiers: 'T11–T15 Commanders' }
+    ];
+    document.getElementById('pilotbox-list').innerHTML = pods.map(p => `
+      <div class="unit-card">
+        <div class="unit-title">🎖️ ${p.name}</div>
+        <div class="section-sub">${p.tiers}</div>
+        <button class="btn btn-purple" style="margin-top:6px;" onclick="Game.recruitPilotPod(${p.idx})">Recruit (◈${fmtNum(p.cost)})</button>
+      </div>
+    `).join('');
+  },
+
+  renderBuyerAuctionLotFull() {
+    const lot = State.buyerAuction;
+    if (!lot) return;
+    const u = lot.unit;
+    const tData = TIERS[u.tier] || TIERS[0];
+    const sqCfg = SQUAD_CONFIGS[u.squadSize || 1];
+
+    document.getElementById('buyer-thumb').src = u.thumb;
+    const tTag = document.getElementById('buyer-tier-tag');
+    tTag.textContent = tData.code;
+    tTag.style.color = tData.color;
+    document.getElementById('buyer-squad-tag').textContent = sqCfg.short;
+    document.getElementById('buyer-dex-tag').textContent = '#' + String(u.dexNum).padStart(4, '0');
+    document.getElementById('buyer-unit-title').textContent = `${u.name} (${u.finish})`;
+    this.updateBuyerAuctionTextOnly();
+  },
+
+  updateBuyerAuctionTextOnly() {
+    const lot = State.buyerAuction;
+    if (!lot) return;
+    const navBadge = document.getElementById('auc-timer');
+    if (navBadge) navBadge.textContent = lot.phase === 'LIVE' ? `${Math.ceil(lot.timeLeft)}s` : 'WIN';
+
+    const card = document.getElementById('buyer-spotlight-card');
+    const banner = document.getElementById('buyer-verdict-banner');
+    const vText = document.getElementById('buyer-verdict-text');
+    const vCount = document.getElementById('buyer-verdict-countdown');
+
+    document.getElementById('buyer-timer-badge').textContent = `⏱️ ${lot.timeLeft.toFixed(1)}s`;
+    document.getElementById('buyer-true-val').textContent = '◈' + fmtNum(lot.unit.val);
+    document.getElementById('buyer-cur-bid').textContent = '◈' + fmtNum(lot.curBid);
+    const estProfit = Math.max(0, lot.unit.val - lot.curBid);
+    document.getElementById('buyer-flip-profit').textContent = '+◈' + fmtNum(estProfit);
+
+    const hb = document.getElementById('buyer-high-bidder');
+    hb.textContent = lot.highBidder;
+    hb.style.color = lot.playerLeading ? 'var(--emerald)' : 'var(--gold)';
+
+    if (lot.phase === 'VERDICT') {
+      banner.classList.add('show');
+      if (lot.playerLeading) {
+        card.className = 'snipe-spotlight phase-won';
+        banner.style.color = 'var(--emerald)';
+        vText.textContent = `🏆 WON BY YOU FOR ◈${fmtNum(lot.curBid)}!`;
+      } else {
+        card.className = 'snipe-spotlight phase-lost';
+        banner.style.color = 'var(--crimson)';
+        vText.textContent = `SOLD TO ${lot.highBidder} (◈${fmtNum(lot.curBid)})`;
+      }
+      vCount.textContent = `NEXT IN ${lot.verdictTimer.toFixed(1)}s`;
+    } else {
+      card.className = 'snipe-spotlight';
+      banner.classList.remove('show');
+    }
+  },
+
+  updateSellerLanesDOM(forceRebuild = false) {
+    const wrap = document.getElementById('seller-auction-list');
+    if (!wrap) return;
+    if (!forceRebuild && wrap.children.length === 5) {
+      for (let i = 0; i < 5; i++) {
+        const lane = State.sellerLanes[i];
+        const tEl = document.getElementById(`slane-time-${i}`);
+        const bEl = document.getElementById(`slane-bid-${i}`);
+        const hEl = document.getElementById(`slane-who-${i}`);
+        if (lane && tEl && bEl && hEl) {
+          tEl.textContent = `${lane.timeLeft.toFixed(1)}s`;
+          bEl.textContent = `◈${fmtNum(lane.curBid)}`;
+          hEl.textContent = lane.highBidder;
+          hEl.style.color = lane.bidWar ? 'var(--gold)' : 'var(--emerald)';
+        }
+      }
+      return;
+    }
+
+    const cards = [];
+    for (let i = 0; i < 5; i++) {
+      const lane = State.sellerLanes[i];
+      if (!lane) {
+        cards.push(`
+          <div class="unit-card" style="justify-content:center; align-items:center; min-height:190px; text-align:center;">
+            <div class="section-title">LANE #${i + 1} OPEN</div>
+            <div class="section-sub">Click "🔨 Auction" on any Owned Unit or tap Auto-Fill above!</div>
+          </div>
+        `);
+      } else {
+        const u = lane.unit;
+        const tData = TIERS[u.tier] || TIERS[0];
+        const sqCfg = SQUAD_CONFIGS[u.squadSize || 1];
+        cards.push(`
+          <div class="unit-card" style="border-color:${lane.bidWar ? 'var(--gold)' : 'var(--border)'};">
+            <div class="unit-thumb-wrap" onclick="Inspector.open('SELLER', ${i})">
+              <img class="unit-thumb" src="${u.thumb}" alt="${u.name}" />
+              <span class="tier-tag" style="color:${tData.color};">${tData.code}</span>
+              <span class="squad-tag">${sqCfg.short}</span>
+              <span class="finish-tag" id="slane-time-${i}">${lane.timeLeft.toFixed(1)}s</span>
+            </div>
+            <div class="unit-title">${u.name}</div>
+            <div class="unit-meta"><span>Val: ◈${fmtNum(u.val)}</span><b class="val-gold" id="slane-bid-${i}">◈${fmtNum(lane.curBid)}</b></div>
+            <div style="font-size:9px; font-weight:800;" id="slane-who-${i}">${lane.highBidder}</div>
+          </div>
+        `);
+      }
+    }
+    wrap.innerHTML = cards.join('');
+  },
+
+  renderSectors() {
+    const cards = SECTORS.map((s, idx) => {
+      const slot = State.sectors[idx];
+      const u = slot.unitId ? State.units.find(x => x.id === slot.unitId) : null;
+      const pct = u ? Math.min(100, Math.round((slot.progress / s.cycleSec) * 100)) : 0;
+      return `
+        <div class="unit-card">
+          <div class="unit-title">🚩 ${s.name} (Min ${TIERS[s.minTier].code})</div>
+          <div class="section-sub">${s.desc}</div>
+          <div class="unit-meta" style="margin-top:4px;">
+            <span>Base: <b class="val-gold">+◈${fmtNum(s.baseReward)}</b> / ${s.cycleSec}s</span>
+            <span>🍖 -${s.fuelCost} Supply</span>
+          </div>
+          <div style="font-size:10px; font-weight:800; color:${u ? 'var(--emerald)' : 'var(--text-dim)'};">
+            ${u ? `🛡️ [${TIERS[u.tier].code} ${SQUAD_CONFIGS[u.squadSize || 1].short}] ${u.name}` : 'Unassigned — Select in Tab 1 or Dispatch All'}
+          </div>
+          <div class="hp-bar-outer"><div class="hp-bar-inner" id="sec-bar-${idx}" style="width:${pct}%;"></div></div>
+        </div>
+      `;
+    });
+    document.getElementById('sector-list').innerHTML = cards.join('');
+  },
+
+  updateSectorBarsOnly() {
+    for (let i = 0; i < SECTORS.length; i++) {
+      const bar = document.getElementById(`sec-bar-${i}`);
+      if (!bar) continue;
+      const slot = State.sectors[i];
+      const pct = slot.unitId ? Math.min(100, Math.round((slot.progress / SECTORS[i].cycleSec) * 100)) : 0;
+      bar.style.width = pct + '%';
+    }
+  },
+
+  renderCommand() {
+    document.getElementById('tog-automarch').textContent = `🤖 Auto-March: ${State.auto.autoMarch ? 'ON' : 'OFF'}`;
+    document.getElementById('tog-autorepair').textContent = `🔧 Auto-Repair: ${State.auto.autoRepair ? 'ON' : 'OFF'}`;
+    document.getElementById('tog-autosupply').textContent = `🍖 Auto-Supply: ${State.auto.autoSupply ? 'ON' : 'OFF'}`;
+
+    document.getElementById('commission-list').innerHTML = State.commissions.map((c, idx) => `
+      <div class="unit-card">
+        <div class="unit-title">${c.title}</div>
+        <div class="section-sub">Reward: <b class="val-gold">+◈${fmtNum(c.rewardCredits)}</b> + Free ${TIERS[Math.min(14, c.reqTier + 1)].code} Unit</div>
+        <button class="btn ${c.done ? '' : 'btn-emerald'}" style="margin-top:6px;" ${c.done ? 'disabled' : ''} onclick="Game.fulfillCommission(${idx})">
+          ${c.done ? '✓ COMPLETED' : '📜 Fulfill Charter'}
+        </button>
+      </div>
+    `).join('');
+  },
+
+  getMilestoneById(id) {
+    const book = Math.floor((id - 1) / 25);
+    const step = ((id - 1) % 25) + 1;
+    const reward = step * 150 * (book + 1);
+    let cur = 0, target = step * 2, title = '';
+
+    if (book === 0) {
+      cur = Object.keys(State.codex).length;
+      target = step * 8;
+      title = `Codex Collector #${step}: Discover ${target} Units`;
+    } else if (book === 1) {
+      cur = State.stats.forged;
+      target = step * 2;
+      title = `Wayland Smith #${step}: Forge ${target} Custom Units`;
+    } else if (book === 2) {
+      cur = State.stats.battlesWon;
+      target = step * 2;
+      title = `Shieldwall Victor #${step}: Win ${target} Arena Battles`;
+    } else if (book === 3) {
+      cur = State.units.length;
+      target = step * 2;
+      title = `Royal Warband #${step}: Own ${target} Active Units`;
+    } else if (book === 4) {
+      cur = State.stats.auctionsWon + State.stats.auctionsSold;
+      target = step * 2;
+      title = `Syndicate Trader #${step}: Complete ${target} Auctions`;
+    } else {
+      cur = State.stats.patrolsRun;
+      target = step * 5;
+      title = `Bretwalda Patrol #${step}: Complete ${target} Patrol Cycles`;
+    }
+    return { id, book, title, cur, target, reward, ready: cur >= target };
+  },
+
+  renderMilestones() {
+    const filter = document.getElementById('mile-book-filter').value;
+    const cards = [];
+    for (let i = 1; i <= 150; i++) {
+      const m = this.getMilestoneById(i);
+      if (filter !== 'ALL' && String(m.book) !== filter) continue;
+      const claimed = !!State.milestonesClaimed[i];
+      cards.push(`
+        <div class="unit-card" style="opacity:${claimed ? 0.55 : 1};">
+          <div class="unit-title">#${i}. ${m.title}</div>
+          <div class="unit-meta">
+            <span>Progress: ${fmtNum(m.cur)}/${fmtNum(m.target)}</span>
+            <b class="val-gold">+◈${fmtNum(m.reward)}</b>
+          </div>
+          <button class="btn btn-xs ${claimed ? '' : (m.ready ? 'btn-gold' : '')}" ${claimed || !m.ready ? 'disabled' : ''} onclick="Game.claimMilestone(${i})">
+            ${claimed ? '✓ Claimed' : (m.ready ? '✨ Claim Reward' : 'In Progress')}
+          </button>
+        </div>
+      `);
+    }
+    document.getElementById('milestone-list').innerHTML = cards.join('');
+  },
+
+  openCodeModal() { document.getElementById('code-modal').classList.add('open'); },
+  openSaveModal() { document.getElementById('save-modal').classList.add('open'); },
+
+  toast(msg) {
+    const wrap = document.getElementById('toast-wrap');
+    const el = document.createElement('div');
+    el.className = 'toast-msg';
+    el.textContent = msg;
+    wrap.appendChild(el);
+    setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 3200);
+  }
+};
+
+/* ============================================================================
+   9. THUMBNAIL-STRIPPED LOCALSTORAGE AUTO-SAVE SYSTEM
+   ============================================================================ */
+const SaveSystem = {
+  KEY: 'SAXON_DANE_2000_SQUAD_V2',
+
+  serialize() {
+    // Strip base64 thumbnails so localStorage never overflows
+    const cleanUnits = State.units.map(u => ({ ...u, thumb: '' }));
+    return JSON.stringify({
+      funds: State.funds,
+      fuel: State.fuel,
+      godMode: State.godMode,
+      units: cleanUnits,
+      pilots: State.pilots,
+      codex: State.codex,
+      milestonesClaimed: State.milestonesClaimed,
+      tech: State.tech,
+      auto: State.auto,
+      stats: State.stats,
+      sectors: State.sectors
+    });
+  },
+
+  saveToLocal(notify = false) {
+    try {
+      localStorage.setItem(this.KEY, this.serialize());
+      if (notify) UI.toast('💾 Chronicle Saved to Browser Storage!');
+    } catch (e) {
+      if (notify) UI.toast('⚠️ Storage quota warning — use Export String.');
+    }
+  },
+
+  loadFromLocal() {
+    try {
+      const raw = localStorage.getItem(this.KEY);
+      if (!raw) return;
+      this.applyData(JSON.parse(raw));
+    } catch (e) {}
+  },
+
+  applyData(data) {
+    if (!data) return;
+    State.funds = data.funds ?? 500;
+    State.fuel = data.fuel ?? 1000;
+    State.godMode = !!data.godMode;
+    State.units = (data.units || []).map(u => ({
+      ...u,
+      squadSize: u.squadSize || 1,
+      beardStyle: u.beardStyle || 'trim_fork',
+      thumb: ''
+    }));
+    State.pilots = data.pilots || [];
+    State.codex = data.codex || {};
+    State.milestonesClaimed = data.milestonesClaimed || {};
+    State.tech = data.tech || { yield: 0, fuel: 0, atk: 0, cap: 0 };
+    State.auto = data.auto || { autoMarch: false, autoRepair: false, autoSupply: false };
+    State.stats = data.stats || { forged: 0, unboxed: 0, battlesWon: 0, auctionsWon: 0, auctionsSold: 0, patrolsRun: 0 };
+    if (data.sectors && data.sectors.length === SECTORS.length) {
+      State.sectors = data.sectors;
+    }
+  },
+
+  exportSaveString() {
+    const str = btoa(unescape(encodeURIComponent(this.serialize())));
+    const box = document.getElementById('save-string-box');
+    box.value = str;
+    box.select();
+    document.execCommand('copy');
+    UI.toast('📤 Exported & copied Save String!');
+  },
+
+  importSaveString() {
+    try {
+      const str = document.getElementById('save-string-box').value.trim();
+      if (!str) return;
+      const json = decodeURIComponent(escape(atob(str)));
+      this.applyData(JSON.parse(json));
+      this.saveToLocal(false);
+      UI.refreshAll();
+      document.getElementById('save-modal').classList.remove('open');
+      UI.toast('📥 Save String Loaded Successfully!');
+    } catch (e) {
+      UI.toast('⚠️ Invalid Save String.');
+    }
+  },
+
+  hardReset() {
+    localStorage.removeItem(this.KEY);
+    location.reload();
+  }
+};
+
+window.onload = function () {
+  Inspector.initEvents();
+  Game.init();
+};
+</script>
+</body>
+</html>
